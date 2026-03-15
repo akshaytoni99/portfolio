@@ -232,7 +232,7 @@ export default function Hero() {
             <path d="M16 2L4 28h10L8 58l18-32H14L22 2H16z" fill="url(#boltG1)" />
             <defs>
               <linearGradient id="boltG1" x1="12" y1="2" x2="12" y2="58" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#a855f7" /><stop offset="1" stopColor="#f97316" />
+                <stop stopColor="#a855f7" /><stop offset="1" stopColor="#ec4899" />
               </linearGradient>
             </defs>
           </motion.svg>
@@ -246,7 +246,7 @@ export default function Hero() {
             <path d="M12 1L3 20h7L6 41l13-23H10L16 1H12z" fill="url(#boltG2)" />
             <defs>
               <linearGradient id="boltG2" x1="9" y1="1" x2="9" y2="41" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#f97316" /><stop offset="1" stopColor="#a855f7" />
+                <stop stopColor="#ec4899" /><stop offset="1" stopColor="#a855f7" />
               </linearGradient>
             </defs>
           </motion.svg>

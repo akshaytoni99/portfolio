@@ -70,7 +70,7 @@
   transform: translateY(40px) rotateX(90deg);
   animation: letterReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards,
     nameGradientShift 6s ease-in-out infinite 1.5s;
-  background: linear-gradient(90deg, #fff, #e9d5ff, #a855f7, #f97316, #fff);
+  background: linear-gradient(90deg, #fff, #e9d5ff, #a855f7, #ec4899, #fff);
   background-size: 300% 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -96,7 +96,7 @@
 }
 
 .hero-name::before {
-  color: #f97316;
+  color: #ec4899;
   animation: glitch1 8s ease-in-out infinite;
 }
 
@@ -141,10 +141,10 @@
 }
 
 .role-cursor {
-  color: #f97316;
+  color: #ec4899;
   animation: cursorBlink 1s step-end infinite;
   font-weight: 100;
-  text-shadow: 0 0 8px rgba(249, 115, 22, 0.8), 0 0 20px rgba(249, 115, 22, 0.4);
+  text-shadow: 0 0 8px rgba(236, 72, 153, 0.8), 0 0 20px rgba(236, 72, 153, 0.4);
 }
 
 @keyframes cursorBlink {
@@ -190,7 +190,7 @@
   background: radial-gradient(
     ellipse at center,
     rgba(168, 85, 247, 0.25) 0%,
-    rgba(249, 115, 22, 0.12) 40%,
+    rgba(236, 72, 153, 0.12) 40%,
     transparent 70%
   );
   filter: blur(50px);
@@ -209,7 +209,7 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(249, 115, 22, 0.2) 0%,
+    rgba(236, 72, 153, 0.2) 0%,
     rgba(192, 132, 252, 0.08) 50%,
     transparent 70%
   );
@@ -273,7 +273,7 @@
 }
 
 .ring-2 {
-  stroke: rgba(249, 115, 22, 0.15);
+  stroke: rgba(236, 72, 153, 0.15);
   stroke-dasharray: 4 8;
   animation: svgRingSpin 35s linear infinite reverse;
   transform-origin: 250px 250px;
@@ -310,7 +310,7 @@
   box-shadow:
     0 0 40px rgba(0, 0, 0, 0.5),
     0 0 80px rgba(168, 85, 247, 0.2),
-    0 0 120px rgba(249, 115, 22, 0.1);
+    0 0 120px rgba(236, 72, 153, 0.1);
 }
 
 @keyframes photo3dFloat {
@@ -352,7 +352,7 @@
     rgba(168, 85, 247, 0.7),
     transparent 25%,
     transparent 75%,
-    rgba(249, 115, 22, 0.6)
+    rgba(236, 72, 153, 0.6)
   );
   z-index: -1;
   animation: borderRotate 5s linear infinite;
@@ -494,7 +494,7 @@
 
 @keyframes boltFlicker {
   0%, 100% { opacity: 0.5; filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.3)); }
-  30% { opacity: 0.8; filter: drop-shadow(0 0 15px rgba(249, 115, 22, 0.6)); }
+  30% { opacity: 0.8; filter: drop-shadow(0 0 15px rgba(236, 72, 153, 0.6)); }
   50% { opacity: 0.3; }
   70% { opacity: 0.9; filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.7)); }
   80% { opacity: 0.4; }
@@ -550,7 +550,7 @@
   position: absolute;
   inset: -3px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #7c3aed, #fb923c, #a855f7, #7c3aed);
+  background: linear-gradient(135deg, #7c3aed, #c084fc, #a855f7, #7c3aed);
   background-size: 300% 300%;
   z-index: -1;
   opacity: 0;

@@ -41,7 +41,7 @@ const projects = [
       "AI-powered system that extracts and summarizes web articles and YouTube videos using LLMs to help users quickly understand long-form content.",
     tags: ["LLM", "NLP", "Content Summarization"],
     github: "https://github.com/akshaytoni99/InsightStream-AI-LLM-Powered-Web-YouTube-Summarization-System",
-    color: "#f97316",
+    color: "#ec4899",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <polygon points="5 3 19 12 5 21 5 3" />
@@ -69,7 +69,7 @@ const projects = [
       "Built a conversational AI chatbot that allows users to interact with SQL databases using natural language queries.",
     tags: ["LangChain", "SQL", "Streamlit", "LLM"],
     github: "https://github.com/akshaytoni99/LLM-Powered-SQL-Database-Chatbot-using-LangChain-and-Streamlit",
-    color: "#fb923c",
+    color: "#c084fc",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />

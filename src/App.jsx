@@ -14,7 +14,7 @@ import Projects from "./components/Projects";
 import Certifications from "./components/Certifications";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import Marquee from "./components/Marquee";
+
 import "./App.css";
 
 function App() {
@@ -29,7 +29,6 @@ function App() {
       <Navbar />
       <main>
         <Hero />
-        <Marquee />
         <About />
         <SectionDivider />
         <Experience />

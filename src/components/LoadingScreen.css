@@ -62,7 +62,7 @@
 
 .loading-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #7c3aed, #a855f7, #f97316);
+  background: linear-gradient(90deg, #7c3aed, #a855f7, #ec4899);
   border-radius: 3px;
   transition: width 0.15s ease-out;
   box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);

@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import "./CursorTrail.css";
 
-const COLORS = ["168, 85, 247", "236, 72, 153", "249, 115, 22", "192, 132, 252"];
-const MAX_PARTICLES = 100;
+const COLORS = ["168, 85, 247", "236, 72, 153", "236, 72, 153", "192, 132, 252"];
+const MAX_PARTICLES = 60;
 const LIFE_DECAY = 0.015;
 const GRAVITY = 0.01;
 const AI_SYMBOLS = ["0", "1", "0", "1", "<", ">", "{", "}", "λ", "Σ", "∞", "AI", "ML", "⟨", "⟩", "/", "*", "θ", "∂", "∇"];

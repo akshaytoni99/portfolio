@@ -27,7 +27,7 @@ const techCategories = [
   },
   {
     title: "Generative AI & LLMs",
-    color: "#f97316",
+    color: "#ec4899",
     tools: [
       { name: "GPT", logo: "/logos/openai.svg" },
       { name: "Claude", logo: "/logos/claude.svg" },
@@ -49,7 +49,7 @@ const techCategories = [
   },
   {
     title: "Retrieval & AI Systems",
-    color: "#fb923c",
+    color: "#c084fc",
     tools: [
       { name: "RAG", icon: "RAG" },
       { name: "FAISS", icon: "F" },

@@ -68,7 +68,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #a855f7, #f97316);
+  background: linear-gradient(90deg, #a855f7, #ec4899);
   transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   border-radius: 1px;
 }
@@ -92,7 +92,7 @@
 
 .nav-cta {
   padding: 10px 24px !important;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(249, 115, 22, 0.12));
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(236, 72, 153, 0.12));
   border: 1px solid rgba(168, 85, 247, 0.25) !important;
   border-radius: 10px;
   color: #e9d5ff !important;
@@ -104,7 +104,7 @@
 }
 
 .nav-cta:hover {
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(249, 115, 22, 0.2)) !important;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2)) !important;
   box-shadow: 0 4px 20px rgba(168, 85, 247, 0.2);
   border-color: rgba(168, 85, 247, 0.45) !important;
   transform: translateY(-2px);

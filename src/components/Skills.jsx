@@ -33,15 +33,15 @@ const skillCategories = [
   {
     title: "Generative AI",
     icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" strokeWidth="1.5">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ec4899" strokeWidth="1.5">
         <path d="M12 2a4 4 0 014 4c0 1.1-.9 2-2 2h-4c-1.1 0-2-.9-2-2a4 4 0 014-4z" />
         <path d="M8 8v4m8-4v4M6 16a6 6 0 0012 0" />
-        <circle cx="9" cy="14" r="1" fill="#f97316" />
-        <circle cx="15" cy="14" r="1" fill="#f97316" />
+        <circle cx="9" cy="14" r="1" fill="#ec4899" />
+        <circle cx="15" cy="14" r="1" fill="#ec4899" />
       </svg>
     ),
     skills: ["GPT", "Claude", "LLaMA", "Mistral", "Gemini"],
-    color: "#f97316",
+    color: "#ec4899",
   },
   {
     title: "LLM Frameworks & Tools",

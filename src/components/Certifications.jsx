@@ -30,7 +30,7 @@ const certifications = [
   {
     title: "Certified Master in Machine Learning, Deep Learning & AI",
     issuer: "Pantech Solutions",
-    color: "#f97316",
+    color: "#ec4899",
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <circle cx="6" cy="6" r="2" />
@@ -55,7 +55,7 @@ const certifications = [
   {
     title: "Python for Data Science",
     issuer: "IBM",
-    color: "#fb923c",
+    color: "#c084fc",
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <rect x="3" y="3" width="7" height="7" rx="1" />

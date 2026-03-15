@@ -12,8 +12,8 @@ import "./AIBackground.css";
   ─ Depth layers, glow, parallax
 */
 
-const BINARY_COUNT = 90;
-const EMBER_COUNT = 60;
+const BINARY_COUNT = 60;
+const EMBER_COUNT = 40;
 const CONNECTION_DIST = 120;
 const MOUSE_RADIUS = 150;
 
@@ -52,7 +52,7 @@ export default function AIBackground() {
       { r: 124, g: 58, b: 237 },
       { r: 168, g: 85, b: 247 },
       { r: 236, g: 72, b: 153 },
-      { r: 249, g: 115, b: 22 },
+      { r: 236, g: 72, b: 153 },
       { r: 109, g: 40, b: 217 },
       { r: 192, g: 132, b: 252 },
     ];

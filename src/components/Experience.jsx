@@ -24,7 +24,7 @@ const experiences = [
     location: "Ranipet, Tamil Nadu",
     period: "Sep 2022 – May 2025",
     type: "Education",
-    color: "#f97316",
+    color: "#ec4899",
     description:
       "Completed Bachelor of Technology in Artificial Intelligence and Data Science with a focus on ML, NLP, and deep learning.",
     highlights: [
