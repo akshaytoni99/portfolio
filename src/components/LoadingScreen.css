@@ -1,0 +1,111 @@
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #030712;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+
+.loading-screen.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  z-index: 1;
+}
+
+.loading-logo {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: -2px;
+  animation: loadingPulse 1.5s ease-in-out infinite;
+}
+
+.loading-bracket {
+  color: #a855f7;
+  font-weight: 400;
+}
+
+.loading-name {
+  background: linear-gradient(135deg, #fff, #e9d5ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes loadingPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.3));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.6));
+    transform: scale(1.05);
+  }
+}
+
+.loading-bar-track {
+  width: 200px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.loading-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed, #a855f7, #f97316);
+  border-radius: 3px;
+  transition: width 0.15s ease-out;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+}
+
+.loading-text {
+  font-size: 0.75rem;
+  color: #5a6580;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  animation: loadingTextBlink 1.5s ease-in-out infinite;
+}
+
+@keyframes loadingTextBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* Floating particles */
+.loading-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.loading-particle {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--s);
+  height: var(--s);
+  border-radius: 50%;
+  background: rgba(168, 85, 247, 0.3);
+  animation: particleFloat var(--d) ease-in-out infinite;
+}
+
+@keyframes particleFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-30px) scale(1.5);
+    opacity: 0.7;
+  }
+}

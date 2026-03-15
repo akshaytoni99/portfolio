@@ -1,0 +1,124 @@
+.contact {
+  padding: 8rem 2rem 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(50px);
+  filter: blur(10px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-container.revealed {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Staggered card entrance */
+.contact-container.revealed .contact-card {
+  animation: cardReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.contact-container.revealed .contact-card:nth-child(1) { animation-delay: 0.15s; }
+.contact-container.revealed .contact-card:nth-child(2) { animation-delay: 0.25s; }
+.contact-container.revealed .contact-card:nth-child(3) { animation-delay: 0.35s; }
+
+@keyframes cardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.contact-subtitle {
+  color: #7c8ba1;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 550px;
+  margin: 0 auto 3rem;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  background: rgba(3, 7, 18, 0.7);
+  backdrop-filter: blur(20px);
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-card:hover {
+  border-color: color-mix(in srgb, var(--accent, #a855f7) 50%, transparent);
+  transform: translateY(-6px) scale(1.03);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.25),
+    0 0 30px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.contact-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  color: var(--accent);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-card:hover .contact-icon {
+  box-shadow: 0 0 25px color-mix(in srgb, var(--accent) 30%, transparent);
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  transform: scale(1.1);
+}
+
+.contact-card h3 {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.contact-card span {
+  color: #7c8ba1;
+  font-size: 0.82rem;
+  transition: color 0.3s;
+}
+
+.contact-card:hover span {
+  color: #a1afc4;
+}
+
+
+@media (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    max-width: 300px;
+  }
+}

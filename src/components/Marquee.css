@@ -1,0 +1,91 @@
+.marquee-wrapper {
+  width: 100%;
+  overflow: hidden;
+  padding: 1.5rem 0;
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid rgba(168, 85, 247, 0.1);
+  border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+  background: rgba(3, 7, 18, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+/* Fade edges */
+.marquee-wrapper::before,
+.marquee-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 120px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.marquee-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, #030712, transparent);
+}
+
+.marquee-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, #030712, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  animation: marqueeScroll 30s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 2rem;
+  flex-shrink: 0;
+}
+
+.marquee-text {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  white-space: nowrap;
+  transition: color 0.3s;
+}
+
+.marquee-item:hover .marquee-text {
+  color: #a855f7;
+}
+
+.marquee-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(168, 85, 247, 0.3);
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .marquee-text {
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+  }
+
+  .marquee-item {
+    gap: 1.5rem;
+    padding: 0 1.5rem;
+  }
+}

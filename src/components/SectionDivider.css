@@ -1,0 +1,50 @@
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(168, 85, 247, 0.3),
+    rgba(236, 72, 153, 0.2),
+    transparent
+  );
+}
+
+.divider-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+  animation: dotPulse 3s ease-in-out infinite, dotFlicker 6s ease-in-out infinite;
+}
+
+@keyframes dotFlicker {
+  0%, 100% { opacity: 1; }
+  48% { opacity: 1; }
+  49% { opacity: 0.3; }
+  50% { opacity: 1; }
+  51% { opacity: 0.4; }
+  52% { opacity: 1; }
+}
+
+@keyframes dotPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+    transform: scale(1.3);
+  }
+}
