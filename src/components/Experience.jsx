@@ -1,56 +1,17 @@
 import { useCallback } from "react";
+import { motion } from "framer-motion";
 import { useScrollReveal } from "../hooks/useScrollReveal";
+import { useContent } from "../content/ContentContext";
 import "./Experience.css";
 
-const experiences = [
-  {
-    role: "Data Science Trainee",
-    company: "SLA Institute",
-    location: "Chennai, Tamil Nadu",
-    period: "Mar 2025 – Aug 2025",
-    type: "Training",
-    color: "#a855f7",
-    description:
-      "Intensive training in Data Science, Machine Learning, and AI application development with hands-on projects.",
-    highlights: [
-      "Built end-to-end ML pipelines with Python, Pandas, and Scikit-learn",
-      "Developed LLM-powered applications using LangChain and RAG architecture",
-      "Worked with vector databases (FAISS, ChromaDB) for semantic search systems",
-    ],
-  },
-  {
-    role: "B.Tech in AI & Data Science",
-    company: "Annai Mira College of Engineering and Technology",
-    location: "Ranipet, Tamil Nadu",
-    period: "Sep 2022 – May 2025",
-    type: "Education",
-    color: "#ec4899",
-    description:
-      "Completed Bachelor of Technology in Artificial Intelligence and Data Science with a focus on ML, NLP, and deep learning.",
-    highlights: [
-      "Built Hate Speech Detection system using NLP and TF-IDF as capstone project",
-      "Gained expertise in Python, Machine Learning, and Deep Learning",
-      "Studied core AI concepts including NLP, model evaluation, and feature engineering",
-    ],
-  },
-  {
-    role: "Diploma in Mechanical Engineering",
-    company: "Thanthai Periyar Government Polytechnic College",
-    location: "Vellore, Tamil Nadu",
-    period: "Mar 2020 – Mar 2022",
-    type: "Education",
-    color: "#c084fc",
-    description:
-      "Completed Diploma in Mechanical Engineering, building a strong analytical and problem-solving foundation before transitioning to AI.",
-    highlights: [
-      "Developed strong analytical thinking and engineering fundamentals",
-      "Transitioned from mechanical engineering to AI & Data Science",
-    ],
-  },
-];
+const spring = { type: "spring", stiffness: 260, damping: 24 };
+const viewport = { once: true, margin: "-80px" };
+
+const accentColors = ["#6366f1", "#38bdf8", "#818cf8"];
 
 export default function Experience() {
   const [ref, visible] = useScrollReveal(0.1);
+  const experiences = useContent("experience").items ?? [];
 
   const handleMouseMove = useCallback((e) => {
     const card = e.currentTarget;
@@ -80,39 +41,46 @@ export default function Experience() {
 
         <div className="exp-timeline">
           {experiences.map((exp, idx) => (
-            <div
-              key={exp.role}
+            <motion.div
+              key={exp.id ?? exp.role}
               className="exp-card"
-              style={{
-                "--accent": exp.color,
-                animationDelay: `${idx * 0.15}s`,
-              }}
+              style={{ "--accent": exp.color ?? accentColors[idx % accentColors.length] }}
+              initial={{ opacity: 0, x: idx % 2 === 0 ? -60 : 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={viewport}
+              transition={spring}
             >
               <div className="exp-timeline-marker">
-                <div className="exp-dot" />
+                <motion.div
+                  className="exp-dot"
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={viewport}
+                  transition={{ ...spring, delay: 0.15 }}
+                />
                 {idx < experiences.length - 1 && <div className="exp-line" />}
               </div>
 
               <div className="exp-content" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
-                <span className="exp-type">{exp.type}</span>
+                <span className="exp-type">{exp.tag}</span>
                 <h3 className="exp-role">{exp.role}</h3>
                 <div className="exp-company">{exp.company}</div>
                 <div className="exp-meta">
-                  <span className="exp-period">{exp.period}</span>
+                  <span className="exp-period">{exp.duration}</span>
                   <span className="exp-location">{exp.location}</span>
                 </div>
 
-                <p className="exp-desc">{exp.description}</p>
+                <p className="exp-desc" dangerouslySetInnerHTML={{ __html: exp.description }} />
 
                 <ul className="exp-highlights">
-                  {exp.highlights.map((h) => (
+                  {(exp.achievements ?? []).map((h) => (
                     <li key={h}>{h}</li>
                   ))}
                 </ul>
               </div>
 
               <div className="exp-card-glow" />
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

@@ -25,27 +25,7 @@
   gap: 1.5rem;
 }
 
-/* Staggered card entrance */
-.certs-container.revealed .cert-card {
-  animation: cardReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.certs-container.revealed .cert-card:nth-child(1) { animation-delay: 0.1s; }
-.certs-container.revealed .cert-card:nth-child(2) { animation-delay: 0.2s; }
-.certs-container.revealed .cert-card:nth-child(3) { animation-delay: 0.3s; }
-.certs-container.revealed .cert-card:nth-child(4) { animation-delay: 0.4s; }
-.certs-container.revealed .cert-card:nth-child(5) { animation-delay: 0.5s; }
-
-@keyframes cardReveal {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
+/* Staggered card entrance now handled by framer-motion springs in Certifications.jsx */
 
 .cert-card {
   position: relative;
@@ -74,9 +54,9 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(168, 85, 247, 0.04),
-    rgba(236, 72, 153, 0.08),
-    rgba(168, 85, 247, 0.04),
+    rgba(99, 102, 241, 0.04),
+    rgba(56, 189, 248, 0.08),
+    rgba(99, 102, 241, 0.04),
     transparent
   );
   transform: skewX(-15deg);

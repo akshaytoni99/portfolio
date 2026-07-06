@@ -14,8 +14,8 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(168, 85, 247, 0.3),
-    rgba(236, 72, 153, 0.2),
+    rgba(99, 102, 241, 0.3),
+    rgba(56, 189, 248, 0.2),
     transparent
   );
 }
@@ -24,9 +24,9 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #a855f7, #ec4899);
-  box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
-  animation: dotPulse 3s ease-in-out infinite, dotFlicker 6s ease-in-out infinite;
+  background: linear-gradient(135deg, #6366f1, #38bdf8);
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+  animation: dotPulse 3s ease-in-out infinite;
 }
 
 @keyframes dotFlicker {
@@ -40,11 +40,11 @@
 
 @keyframes dotPulse {
   0%, 100% {
-    box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
     transform: scale(1);
   }
   50% {
-    box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
     transform: scale(1.3);
   }
 }

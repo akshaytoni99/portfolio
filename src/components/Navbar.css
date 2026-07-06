@@ -38,7 +38,7 @@
 }
 
 .logo-bracket {
-  color: #a855f7;
+  color: #6366f1;
   font-weight: 400;
 }
 
@@ -68,7 +68,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #a855f7, #ec4899);
+  background: linear-gradient(90deg, #6366f1, #38bdf8);
   transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   border-radius: 1px;
 }
@@ -82,20 +82,20 @@
 }
 
 .nav-links a.active {
-  color: #e9d5ff;
+  color: #e0e7ff;
 }
 
 .nav-links a.active::after {
   width: 100%;
-  box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
 }
 
 .nav-cta {
   padding: 10px 24px !important;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(236, 72, 153, 0.12));
-  border: 1px solid rgba(168, 85, 247, 0.25) !important;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(56, 189, 248, 0.12));
+  border: 1px solid rgba(99, 102, 241, 0.25) !important;
   border-radius: 10px;
-  color: #e9d5ff !important;
+  color: #e0e7ff !important;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
@@ -104,9 +104,9 @@
 }
 
 .nav-cta:hover {
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2)) !important;
-  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.2);
-  border-color: rgba(168, 85, 247, 0.45) !important;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(56, 189, 248, 0.2)) !important;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.45) !important;
   transform: translateY(-2px);
 }
 
@@ -153,4 +153,15 @@
 
   .nav-links.open { right: 0; }
   .nav-links a { font-size: 1.1rem; }
+}
+
+/* --- Smart navbar: scroll-state glass (added) --- */
+.navbar.nav-scrolled {
+  background: rgba(3, 7, 18, 0.75);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  transition: background 0.3s ease, box-shadow 0.3s ease,
+    padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }

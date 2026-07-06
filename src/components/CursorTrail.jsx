@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import "./CursorTrail.css";
 
-const COLORS = ["168, 85, 247", "236, 72, 153", "236, 72, 153", "192, 132, 252"];
+const COLORS = ["99, 102, 241", "56, 189, 248", "56, 189, 248", "129, 140, 248"];
 const MAX_PARTICLES = 60;
 const LIFE_DECAY = 0.015;
 const GRAVITY = 0.01;

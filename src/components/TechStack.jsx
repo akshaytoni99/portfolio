@@ -1,69 +1,16 @@
 import { useCallback } from "react";
 import { useScrollReveal } from "../hooks/useScrollReveal";
+import { useContent } from "../content/ContentContext";
 import "./TechStack.css";
 
-const techCategories = [
-  {
-    title: "Languages & Data",
-    color: "#a855f7",
-    tools: [
-      { name: "Python", logo: "/logos/python.svg" },
-      { name: "SQL", icon: "SQL" },
-      { name: "Pandas", icon: "Pd" },
-      { name: "NumPy", icon: "Np" },
-      { name: "Git", icon: "Git" },
-    ],
-  },
-  {
-    title: "Machine Learning & Deep Learning",
-    color: "#c084fc",
-    tools: [
-      { name: "Scikit-learn", icon: "Sk" },
-      { name: "TensorFlow", logo: "/logos/tensorflow.svg" },
-      { name: "PyTorch", logo: "/logos/pytorch.svg" },
-      { name: "spaCy", icon: "sC" },
-      { name: "Matplotlib", icon: "Mp" },
-    ],
-  },
-  {
-    title: "Generative AI & LLMs",
-    color: "#ec4899",
-    tools: [
-      { name: "GPT", logo: "/logos/openai.svg" },
-      { name: "Claude", logo: "/logos/claude.svg" },
-      { name: "Gemini", logo: "/logos/gemini.svg" },
-      { name: "LLaMA", logo: "/logos/llama.svg" },
-      { name: "Mistral", logo: "/logos/mistral.svg" },
-    ],
-  },
-  {
-    title: "AI Frameworks & Tools",
-    color: "#ec4899",
-    tools: [
-      { name: "LangChain", logo: "/logos/langchain.svg" },
-      { name: "LangGraph", logo: "/logos/langgraph.svg" },
-      { name: "HF Transformers", logo: "/logos/huggingface.svg" },
-      { name: "Groq", logo: "/logos/groq.svg" },
-      { name: "Streamlit", logo: "/logos/streamlit.svg" },
-    ],
-  },
-  {
-    title: "Retrieval & AI Systems",
-    color: "#c084fc",
-    tools: [
-      { name: "RAG", icon: "RAG" },
-      { name: "FAISS", icon: "F" },
-      { name: "ChromaDB", icon: "C" },
-      { name: "AstraDB", icon: "A" },
-      { name: "Embeddings", icon: "E" },
-      { name: "Multi-Agent", icon: "MA" },
-    ],
-  },
-];
-
+// Skill icons starting with "/" are logo file paths (e.g. /logos/python.svg);
+// anything else renders as the letter abbreviation, matching the original markup.
 function ToolIcon({ tool, color }) {
-  if (tool.logo) {
-    return <img src={tool.logo} alt={tool.name} className="tool-logo" />;
+  const logo =
+    tool.logo ??
+    (typeof tool.icon === "string" && tool.icon.startsWith("/") ? tool.icon : null);
+  if (logo) {
+    return <img src={logo} alt={tool.name} className="tool-logo" />;
   }
   return (
     <span className="tool-letter" style={{ color }}>
@@ -74,6 +21,7 @@ function ToolIcon({ tool, color }) {
 
 export default function TechStack() {
   const [ref, visible] = useScrollReveal(0.1);
+  const techCategories = useContent("skills").categories ?? [];
 
   const handleMouseMove = useCallback((e) => {
     const card = e.currentTarget;
@@ -104,21 +52,21 @@ export default function TechStack() {
         <div className="techstack-grid">
           {techCategories.map((cat, catIdx) => (
             <div
-              key={cat.title}
+              key={cat.id ?? cat.name}
               className="tech-category"
               style={{
-                "--accent": cat.color,
+                "--accent": cat.color ?? "#6366f1",
                 animationDelay: `${catIdx * 0.12}s`,
               }}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
             >
-              <h3 className="tech-category-title">{cat.title}</h3>
+              <h3 className="tech-category-title">{cat.name}</h3>
               <div className="tech-tools">
-                {cat.tools.map((tool) => (
+                {(cat.skills ?? []).map((tool) => (
                   <div key={tool.name} className="tech-tool">
                     <div className="tool-icon-wrapper">
-                      <ToolIcon tool={tool} color={cat.color} />
+                      <ToolIcon tool={tool} color={cat.color ?? "#6366f1"} />
                     </div>
                     <span className="tool-name">{tool.name}</span>
                   </div>

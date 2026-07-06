@@ -6,19 +6,19 @@ const skillCategories = [
   {
     title: "Programming & Data",
     icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a855f7" strokeWidth="1.5">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="1.5">
         <polyline points="16 18 22 12 16 6" />
         <polyline points="8 6 2 12 8 18" />
         <line x1="14" y1="4" x2="10" y2="20" />
       </svg>
     ),
     skills: ["Python", "SQL", "Pandas", "NumPy", "Data Processing"],
-    color: "#a855f7",
+    color: "#6366f1",
   },
   {
     title: "Machine Learning",
     icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ec4899" strokeWidth="1.5">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="1.5">
         <circle cx="6" cy="6" r="2" />
         <circle cx="18" cy="6" r="2" />
         <circle cx="6" cy="18" r="2" />
@@ -28,30 +28,30 @@ const skillCategories = [
       </svg>
     ),
     skills: ["Scikit-learn", "TensorFlow", "PyTorch", "Deep Learning"],
-    color: "#ec4899",
+    color: "#38bdf8",
   },
   {
     title: "Generative AI",
     icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ec4899" strokeWidth="1.5">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="1.5">
         <path d="M12 2a4 4 0 014 4c0 1.1-.9 2-2 2h-4c-1.1 0-2-.9-2-2a4 4 0 014-4z" />
         <path d="M8 8v4m8-4v4M6 16a6 6 0 0012 0" />
-        <circle cx="9" cy="14" r="1" fill="#ec4899" />
-        <circle cx="15" cy="14" r="1" fill="#ec4899" />
+        <circle cx="9" cy="14" r="1" fill="#38bdf8" />
+        <circle cx="15" cy="14" r="1" fill="#38bdf8" />
       </svg>
     ),
     skills: ["GPT", "Claude", "LLaMA", "Mistral", "Gemini"],
-    color: "#ec4899",
+    color: "#38bdf8",
   },
   {
     title: "LLM Frameworks & Tools",
     icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c084fc" strokeWidth="1.5">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="1.5">
         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
       </svg>
     ),
     skills: ["LangChain", "LangGraph", "Hugging Face", "Groq", "NVIDIA NIM"],
-    color: "#c084fc",
+    color: "#818cf8",
   },
 ];
 

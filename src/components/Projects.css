@@ -26,43 +26,7 @@
   perspective: 1000px;
 }
 
-/* Staggered card entrance */
-.projects-container.revealed .project-card:nth-child(odd) {
-  animation: cardRevealLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.projects-container.revealed .project-card:nth-child(even) {
-  animation: cardRevealRight 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.projects-container.revealed .project-card:nth-child(1) { animation-delay: 0.1s; }
-.projects-container.revealed .project-card:nth-child(2) { animation-delay: 0.2s; }
-.projects-container.revealed .project-card:nth-child(3) { animation-delay: 0.3s; }
-.projects-container.revealed .project-card:nth-child(4) { animation-delay: 0.4s; }
-.projects-container.revealed .project-card:nth-child(5) { animation-delay: 0.5s; }
-.projects-container.revealed .project-card:nth-child(6) { animation-delay: 0.6s; }
-
-@keyframes cardRevealLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-40px) scale(0.95) rotateY(5deg);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0) scale(1) rotateY(0);
-  }
-}
-
-@keyframes cardRevealRight {
-  from {
-    opacity: 0;
-    transform: translateX(40px) scale(0.95) rotateY(-5deg);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0) scale(1) rotateY(0);
-  }
-}
+/* Card entrance stagger migrated to framer-motion (see Projects.jsx) */
 
 .project-card {
   position: relative;
@@ -72,7 +36,7 @@
   background: rgba(3, 7, 18, 0.7);
   backdrop-filter: blur(20px);
   overflow: hidden;
-  transition: transform 0.15s ease-out, box-shadow 0.4s, border-color 0.4s, background 0.4s;
+  transition: box-shadow 0.4s, border-color 0.4s, background 0.4s;
   display: flex;
   flex-direction: column;
   will-change: transform;
@@ -88,9 +52,9 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(168, 85, 247, 0.04),
-    rgba(236, 72, 153, 0.08),
-    rgba(168, 85, 247, 0.04),
+    rgba(99, 102, 241, 0.04),
+    rgba(56, 189, 248, 0.08),
+    rgba(99, 102, 241, 0.04),
     transparent
   );
   transform: skewX(-15deg);
@@ -255,5 +219,33 @@
 
   .project-card {
     padding: 2rem;
+  }
+}
+
+/* --- Premium card upgrades: cursor spotlight --- */
+.project-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    220px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(99, 102, 241, 0.14),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
+
+/* Respect prefers-reduced-motion: stop the infinite hover pulse */
+@media (prefers-reduced-motion: reduce) {
+  .project-card:hover {
+    animation: none;
   }
 }

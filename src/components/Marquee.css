@@ -4,8 +4,8 @@
   padding: 1.5rem 0;
   position: relative;
   z-index: 1;
-  border-top: 1px solid rgba(168, 85, 247, 0.1);
-  border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+  border-top: 1px solid rgba(99, 102, 241, 0.1);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.1);
   background: rgba(3, 7, 18, 0.5);
   backdrop-filter: blur(10px);
 }
@@ -67,14 +67,14 @@
 }
 
 .marquee-item:hover .marquee-text {
-  color: #a855f7;
+  color: #6366f1;
 }
 
 .marquee-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: rgba(168, 85, 247, 0.3);
+  background: rgba(99, 102, 241, 0.3);
   flex-shrink: 0;
 }
 
