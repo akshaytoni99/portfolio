@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { api } from "../api";
+import { api, mediaSrc } from "../api";
 import { useToast } from "../components/Toast";
 
 const emptyDraft = () => ({
@@ -76,7 +76,7 @@ export default function ResumeEditor({ draft, onChange }) {
             {uploading ? "Uploading…" : "Upload new PDF"}
           </button>
           {data.url ? (
-            <a className="adm-btn" href={data.url} download={data.filename || undefined}>
+            <a className="adm-btn" href={mediaSrc(data.url)} download={data.filename || undefined}>
               Download
             </a>
           ) : null}
@@ -100,7 +100,7 @@ export default function ResumeEditor({ draft, onChange }) {
       {data.url ? (
         <iframe
           title="Resume preview"
-          src={data.url}
+          src={mediaSrc(data.url)}
           style={{
             width: "100%",
             height: 480,

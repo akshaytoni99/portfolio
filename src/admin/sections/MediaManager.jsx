@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { api } from "../api";
+import { api, mediaSrc } from "../api";
 import { useToast } from "../components/Toast";
 import { useConfirm } from "../components/Confirm";
 
@@ -164,7 +164,7 @@ export default function MediaManager() {
             return (
               <div key={name} className="adm-mm-item">
                 {isImageUrl(url) ? (
-                  <img src={url} alt={name} loading="lazy" />
+                  <img src={mediaSrc(url)} alt={name} loading="lazy" />
                 ) : (
                   <div className="adm-mm-ext">{extOf(url).replace(".", "") || "file"}</div>
                 )}

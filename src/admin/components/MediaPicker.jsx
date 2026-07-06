@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { api } from "../api";
+import { api, mediaSrc } from "../api";
 import { useToast } from "./Toast";
 import { useConfirm } from "./Confirm";
 
@@ -152,7 +152,7 @@ export default function MediaPicker({ value, onChange, accept = "any", label }) 
       <div className="adm-mp-current">
         {value ? (
           isImageUrl(value) ? (
-            <img className="adm-mp-thumb" src={value} alt="" />
+            <img className="adm-mp-thumb" src={mediaSrc(value)} alt="" />
           ) : (
             <span className="adm-mp-filename">{baseName(value)}</span>
           )
@@ -219,7 +219,7 @@ export default function MediaPicker({ value, onChange, accept = "any", label }) 
                         }}
                       >
                         {isImageUrl(url) ? (
-                          <img src={url} alt={it.name || ""} loading="lazy" />
+                          <img src={mediaSrc(url)} alt={it.name || ""} loading="lazy" />
                         ) : (
                           <div className="adm-mp-ext">{extOf(url).replace(".", "") || "file"}</div>
                         )}

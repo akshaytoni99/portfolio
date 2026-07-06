@@ -1,0 +1,29 @@
+# Render Blueprint for the portfolio CMS backend (Express + JSON store).
+# Deploy: Render Dashboard → New → Blueprint → connect this repo.
+# A persistent disk keeps content + uploads across restarts/redeploys.
+services:
+  - type: web
+    name: portfolio-cms
+    runtime: node
+    plan: starter # required for a persistent disk; "free" disk is ephemeral
+    buildCommand: npm install
+    startCommand: node server/index.js
+    healthCheckPath: /api/auth/status
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CROSS_SITE
+        value: "true"
+      - key: DATA_DIR
+        value: /var/data/cms
+      - key: UPLOADS_DIR
+        value: /var/data/uploads
+      # Set CLIENT_ORIGIN to your Vercel URL(s), comma-separated, in the
+      # Render dashboard after the frontend is deployed, e.g.
+      #   https://your-portfolio.vercel.app
+      - key: CLIENT_ORIGIN
+        sync: false
+    disk:
+      name: cms-data
+      mountPath: /var/data
+      sizeGB: 1

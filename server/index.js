@@ -3,6 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import express from "express";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import authRouter from "./auth.js";
 import contentRouter from "./routes/content.js";
 import mediaRouter, { UPLOADS_DIR } from "./routes/media.js";
@@ -17,6 +18,24 @@ const ADMIN_ROUTE = process.env.VITE_ADMIN_ROUTE || "/admin-portal";
 
 const app = express();
 app.disable("x-powered-by");
+
+// Cross-origin: allow the deployed frontend origin(s) to call this API with
+// credentials. CLIENT_ORIGIN is a comma-separated allowlist. When unset,
+// same-origin only (local/dev/prod-serving-dist) — no CORS needed.
+const CLIENT_ORIGINS = (process.env.CLIENT_ORIGIN || "")
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean);
+if (CLIENT_ORIGINS.length) {
+  app.set("trust proxy", 1); // secure cookies behind a hosting proxy (Render/Railway)
+  app.use(
+    cors({
+      origin: CLIENT_ORIGINS,
+      credentials: true,
+    })
+  );
+}
+
 app.use(cookieParser());
 app.use(express.json({ limit: "2mb" }));
 

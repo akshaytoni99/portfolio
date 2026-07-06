@@ -25,6 +25,24 @@ function deepMerge(base, override) {
   return merged;
 }
 
+// Uploaded media is stored as "/uploads/x". When the API is on a different
+// host than the frontend, rewrite those to absolute backend URLs so images,
+// videos, and the resume load. Seed/public assets (/profile.png, /logos/…)
+// are untouched — they live with the frontend.
+function rewriteUploads(value, base) {
+  if (!base) return value;
+  if (typeof value === "string") {
+    return value.startsWith("/uploads/") ? base + value : value;
+  }
+  if (Array.isArray(value)) return value.map((v) => rewriteUploads(v, base));
+  if (isPlainObject(value)) {
+    const out = {};
+    for (const [k, v] of Object.entries(value)) out[k] = rewriteUploads(v, base);
+    return out;
+  }
+  return value;
+}
+
 const THEME_VARS = {
   primary: "--color-primary",
   accent: "--color-accent",
@@ -37,12 +55,13 @@ export function ContentProvider({ children }) {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const token = params.get("preview") === "1" ? params.get("token") : null;
+    const base = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
     const url = token
-      ? `/api/content?preview=1&token=${encodeURIComponent(token)}`
-      : "/api/content";
+      ? `${base}/api/content?preview=1&token=${encodeURIComponent(token)}`
+      : `${base}/api/content`;
 
     let cancelled = false;
-    fetch(url)
+    fetch(url, { credentials: "include" })
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (cancelled || !isPlainObject(data)) return;
@@ -50,7 +69,8 @@ export function ContentProvider({ children }) {
           const next = { ...prev };
           for (const section of Object.keys(seeds)) {
             if (data[section] != null) {
-              next[section] = deepMerge(seeds[section], data[section]);
+              const merged = deepMerge(seeds[section], data[section]);
+              next[section] = rewriteUploads(merged, base);
             }
           }
           return next;

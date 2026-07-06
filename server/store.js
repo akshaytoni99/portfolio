@@ -4,7 +4,9 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export const DATA_DIR = path.join(__dirname, "data");
+// DATA_DIR is overridable so a hosting platform can mount a persistent
+// disk (e.g. Render/Railway/Fly volume) outside the code directory.
+export const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, "data");
 const CONTENT_FILE = path.join(DATA_DIR, "content.json");
 const ACTIVITY_FILE = path.join(DATA_DIR, "activity.json");
 

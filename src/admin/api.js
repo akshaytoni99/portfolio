@@ -5,6 +5,18 @@
 // - dispatches window event 'adm:unauthed' on 401 so AdminApp can
 //   drop back to the login screen.
 
+// When the API lives on a different host than the admin UI (production:
+// frontend on Vercel, backend on Render/Railway/Fly), set VITE_API_BASE to
+// the backend URL. Empty in dev/local prod → relative same-origin paths.
+const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
+
+// Prefix uploaded-media paths with the backend origin when the API is
+// cross-origin. Leaves absolute URLs and non-upload paths untouched.
+export function mediaSrc(url) {
+  if (!url || typeof url !== "string") return url;
+  return url.startsWith("/uploads/") ? API_BASE + url : url;
+}
+
 async function request(path, { method = "GET", body, headers } = {}) {
   const opts = { method, credentials: "include", headers: { ...headers } };
 
@@ -17,7 +29,7 @@ async function request(path, { method = "GET", body, headers } = {}) {
 
   let res;
   try {
-    res = await fetch(path, opts);
+    res = await fetch(API_BASE + path, opts);
   } catch {
     const err = new Error("Network error — is the server running?");
     err.status = 0;

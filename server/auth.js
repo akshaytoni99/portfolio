@@ -31,11 +31,16 @@ function saveAuth(auth) {
   writeJsonAtomic(AUTH_FILE, auth);
 }
 
+// When the admin UI is served from a different origin than this API
+// (frontend on Vercel, API on Render/Railway/Fly), the auth cookie must be
+// SameSite=None + Secure or the browser drops it. Enable via CROSS_SITE=true.
+const CROSS_SITE = process.env.CROSS_SITE === "true";
+
 function cookieOptions() {
   return {
     httpOnly: true,
-    sameSite: "strict",
-    secure: process.env.NODE_ENV === "production",
+    sameSite: CROSS_SITE ? "none" : "strict",
+    secure: CROSS_SITE || process.env.NODE_ENV === "production",
     path: "/",
     maxAge: TOKEN_TTL_MS,
   };
