@@ -28,3 +28,4 @@ server/uploads/
 .env
 
 .claude/
+server/.boot.*

@@ -1,11 +1,11 @@
-# Render Blueprint for the portfolio CMS backend (Express + JSON store).
-# Deploy: Render Dashboard → New → Blueprint → connect this repo.
-# A persistent disk keeps content + uploads across restarts/redeploys.
+# Render Blueprint for the portfolio CMS backend (Express API).
+# Storage is Supabase (Postgres + Storage), so NO persistent disk is needed
+# and the FREE plan works. Deploy: Render → New → Blueprint → connect repo.
 services:
   - type: web
     name: portfolio-cms
     runtime: node
-    plan: starter # required for a persistent disk; "free" disk is ephemeral
+    plan: free
     buildCommand: npm install
     startCommand: node server/index.js
     healthCheckPath: /api/auth/status
@@ -14,16 +14,12 @@ services:
         value: production
       - key: CROSS_SITE
         value: "true"
-      - key: DATA_DIR
-        value: /var/data/cms
-      - key: UPLOADS_DIR
-        value: /var/data/uploads
-      # Set CLIENT_ORIGIN to your Vercel URL(s), comma-separated, in the
-      # Render dashboard after the frontend is deployed, e.g.
-      #   https://your-portfolio.vercel.app
-      - key: CLIENT_ORIGIN
+      # Set these in the Render dashboard (Environment tab) — see docs/DEPLOY.md:
+      - key: SUPABASE_URL # https://xxxx.supabase.co
         sync: false
-    disk:
-      name: cms-data
-      mountPath: /var/data
-      sizeGB: 1
+      - key: SUPABASE_SERVICE_KEY # Supabase service_role key (secret)
+        sync: false
+      - key: JWT_SECRET # any long random string (stable across restarts)
+        sync: false
+      - key: CLIENT_ORIGIN # your Vercel URL, e.g. https://your.vercel.app
+        sync: false

@@ -1,12 +1,10 @@
 import crypto from "crypto";
-import path from "path";
 import { Router } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { rateLimit } from "express-rate-limit";
-import { DATA_DIR, readJson, writeJsonAtomic, logActivity } from "./store.js";
+import { getAuthData, saveAuthData, logActivity } from "./store.js";
 
-const AUTH_FILE = path.join(DATA_DIR, "auth.json");
 const COOKIE_NAME = "cms_token";
 const TOKEN_TTL = "30m";
 const TOKEN_TTL_MS = 30 * 60 * 1000;
@@ -15,20 +13,25 @@ const PREVIEW_TTL = "10m";
 const MIN_PASSWORD_LENGTH = 8;
 const BCRYPT_ROUNDS = 10;
 
-function getAuth() {
-  let auth = readJson(AUTH_FILE, null);
-  if (!auth || typeof auth !== "object" || !auth.jwtSecret) {
-    auth = {
-      passwordHash: auth?.passwordHash ?? null,
-      jwtSecret: crypto.randomBytes(48).toString("hex"),
-    };
-    writeJsonAtomic(AUTH_FILE, auth);
-  }
-  return auth;
+// JWT secret: prefer the JWT_SECRET env var (stable across restarts and
+// hosting instances). Otherwise fall back to a value persisted in the store.
+function authSecret() {
+  return process.env.JWT_SECRET || getAuthData().jwtSecret;
 }
 
-function saveAuth(auth) {
-  writeJsonAtomic(AUTH_FILE, auth);
+// Ensure a signing secret exists. Call once at boot after store.init().
+// No-op when JWT_SECRET is provided via env.
+export async function initAuth() {
+  if (process.env.JWT_SECRET) return;
+  const auth = getAuthData();
+  if (!auth.jwtSecret) {
+    await saveAuthData({ ...auth, jwtSecret: crypto.randomBytes(48).toString("hex") });
+  }
+}
+
+function getAuth() {
+  const auth = getAuthData();
+  return { passwordHash: auth.passwordHash ?? null, jwtSecret: authSecret() };
 }
 
 // When the admin UI is served from a different origin than this API
@@ -104,8 +107,8 @@ router.get("/api/auth/status", (req, res) => {
 });
 
 router.post("/api/auth/setup", async (req, res) => {
-  const auth = getAuth();
-  if (auth.passwordHash) {
+  const data = getAuthData();
+  if (data.passwordHash) {
     return res.status(400).json({ error: "Already set up" });
   }
   const password = req.body?.password;
@@ -114,9 +117,8 @@ router.post("/api/auth/setup", async (req, res) => {
       .status(400)
       .json({ error: `Password must be at least ${MIN_PASSWORD_LENGTH} characters` });
   }
-  auth.passwordHash = await bcrypt.hash(password, BCRYPT_ROUNDS);
-  saveAuth(auth);
-  setAuthCookie(res, signToken(auth.jwtSecret));
+  await saveAuthData({ ...data, passwordHash: await bcrypt.hash(password, BCRYPT_ROUNDS) });
+  setAuthCookie(res, signToken(authSecret()));
   logActivity("setup", null, "Admin password created");
   res.json({ ok: true });
 });
@@ -130,7 +132,7 @@ router.post("/api/auth/login", loginLimiter, async (req, res) => {
   if (typeof password !== "string" || !(await bcrypt.compare(password, auth.passwordHash))) {
     return res.status(401).json({ error: "Invalid password" });
   }
-  setAuthCookie(res, signToken(auth.jwtSecret));
+  setAuthCookie(res, signToken(authSecret()));
   res.json({ ok: true });
 });
 
@@ -142,9 +144,9 @@ router.post("/api/auth/logout", (req, res) => {
 });
 
 router.post("/api/auth/change-password", requireAuth, async (req, res) => {
-  const auth = getAuth();
+  const data = getAuthData();
   const { current, next } = req.body ?? {};
-  if (typeof current !== "string" || !(await bcrypt.compare(current, auth.passwordHash))) {
+  if (typeof current !== "string" || !(await bcrypt.compare(current, data.passwordHash))) {
     return res.status(400).json({ error: "Current password is incorrect" });
   }
   if (typeof next !== "string" || next.length < MIN_PASSWORD_LENGTH) {
@@ -152,16 +154,14 @@ router.post("/api/auth/change-password", requireAuth, async (req, res) => {
       .status(400)
       .json({ error: `New password must be at least ${MIN_PASSWORD_LENGTH} characters` });
   }
-  auth.passwordHash = await bcrypt.hash(next, BCRYPT_ROUNDS);
-  saveAuth(auth);
-  setAuthCookie(res, signToken(auth.jwtSecret));
+  await saveAuthData({ ...data, passwordHash: await bcrypt.hash(next, BCRYPT_ROUNDS) });
+  setAuthCookie(res, signToken(authSecret()));
   logActivity("change-password", null, "Admin password changed");
   res.json({ ok: true });
 });
 
 router.post("/api/auth/preview-token", requireAuth, (req, res) => {
-  const auth = getAuth();
-  const token = jwt.sign({ scope: "preview" }, auth.jwtSecret, { expiresIn: PREVIEW_TTL });
+  const token = jwt.sign({ scope: "preview" }, authSecret(), { expiresIn: PREVIEW_TTL });
   res.json({ token });
 });
 

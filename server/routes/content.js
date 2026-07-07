@@ -65,32 +65,48 @@ router.get("/api/admin/content", requireAuth, (req, res) => {
   res.json(getContent());
 });
 
-router.put("/api/admin/content/:section", requireAuth, validateSection, (req, res) => {
-  const body = req.body;
-  if (!body || typeof body !== "object" || Array.isArray(body)) {
-    return res.status(400).json({ error: "Draft body must be an object" });
+router.put("/api/admin/content/:section", requireAuth, validateSection, async (req, res, next) => {
+  try {
+    const body = req.body;
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
+      return res.status(400).json({ error: "Draft body must be an object" });
+    }
+    const entry = await putDraft(req.params.section, sanitize(body));
+    logActivity("save-draft", req.params.section, "Draft saved");
+    res.json(entry);
+  } catch (err) {
+    next(err);
   }
-  const entry = putDraft(req.params.section, sanitize(body));
-  logActivity("save-draft", req.params.section, "Draft saved");
-  res.json(entry);
 });
 
-router.post("/api/admin/content/:section/publish", requireAuth, validateSection, (req, res) => {
-  const entry = publish(req.params.section);
-  logActivity("publish", req.params.section, "Section published");
-  res.json(entry);
+router.post("/api/admin/content/:section/publish", requireAuth, validateSection, async (req, res, next) => {
+  try {
+    const entry = await publish(req.params.section);
+    logActivity("publish", req.params.section, "Section published");
+    res.json(entry);
+  } catch (err) {
+    next(err);
+  }
 });
 
-router.post("/api/admin/content/:section/discard", requireAuth, validateSection, (req, res) => {
-  const entry = discard(req.params.section);
-  logActivity("discard", req.params.section, "Draft discarded");
-  res.json(entry);
+router.post("/api/admin/content/:section/discard", requireAuth, validateSection, async (req, res, next) => {
+  try {
+    const entry = await discard(req.params.section);
+    logActivity("discard", req.params.section, "Draft discarded");
+    res.json(entry);
+  } catch (err) {
+    next(err);
+  }
 });
 
-router.post("/api/admin/publish-all", requireAuth, (req, res) => {
-  const published = publishAll();
-  logActivity("publish-all", null, `Published: ${published.join(", ") || "nothing to publish"}`);
-  res.json({ ok: true, published });
+router.post("/api/admin/publish-all", requireAuth, async (req, res, next) => {
+  try {
+    const published = await publishAll();
+    logActivity("publish-all", null, `Published: ${published.join(", ") || "nothing to publish"}`);
+    res.json({ ok: true, published });
+  } catch (err) {
+    next(err);
+  }
 });
 
 export default router;

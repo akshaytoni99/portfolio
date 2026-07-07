@@ -1,57 +1,66 @@
-# Deploying the portfolio + live CMS
+# Deploying the portfolio + live CMS (100% free)
 
-Two pieces:
-- **Frontend** (static Vite site) → Vercel
-- **Backend** (Express + JSON store) → Render (or Railway/Fly — any Node host with a persistent disk)
+Three free pieces, no credit card:
+- **Supabase** — stores CMS content + uploaded media (free tier)
+- **Render** — runs the Express API (free plan; no disk needed)
+- **Vercel** — serves the static site (free hobby)
 
 The public site works with or without the backend (falls back to seed content).
 The `/admin-portal` CMS needs the backend to save and publish.
 
+Locally, no Supabase is required — the server auto-uses a JSON file store when
+`SUPABASE_URL` is unset (`npm run dev:all`).
+
 ---
 
-## 1. Backend → Render
+## 1. Supabase (storage)
 
-1. Push this repo to GitHub.
-2. Render Dashboard → **New → Blueprint** → pick this repo. It reads `render.yaml`
-   (Node web service + 1 GB persistent disk mounted at `/var/data`).
-   - Plan must be **Starter or higher** for a persistent disk. The free plan's
-     disk is ephemeral, so content/uploads would reset on every restart.
-3. After the frontend is live (step 2), set the backend env var
-   **`CLIENT_ORIGIN`** = your Vercel URL (e.g. `https://your-portfolio.vercel.app`)
-   in the Render dashboard, then redeploy.
-4. Note the backend URL, e.g. `https://portfolio-cms.onrender.com`.
+1. [supabase.com](https://supabase.com) → sign in → **New project** (free, no card).
+   Pick a name + database password (any). Wait ~1 min for it to provision.
+2. **SQL Editor → New query** → paste all of `docs/supabase-setup.sql` → **Run**.
+   (Creates the `cms_kv` table and a public `media` storage bucket.)
+3. **Settings → API** → copy two values for step 2:
+   - **Project URL** → `https://xxxx.supabase.co`
+   - **service_role** secret key (under "Project API keys" — the secret one, *not* anon)
 
-Pre-set env vars (in `render.yaml`): `NODE_ENV=production`, `CROSS_SITE=true`,
-`DATA_DIR=/var/data/cms`, `UPLOADS_DIR=/var/data/uploads`.
+## 2. Backend → Render
 
-## 2. Frontend → Vercel
+1. Push this repo to GitHub (done).
+2. Render Dashboard → **New → Blueprint** → pick this repo (reads `render.yaml`,
+   **free** plan, no disk).
+3. It will ask for these env vars (Environment tab):
+   - `SUPABASE_URL` = your Project URL
+   - `SUPABASE_SERVICE_KEY` = the service_role key
+   - `JWT_SECRET` = any long random string (e.g. mash the keyboard 40+ chars) —
+     keeps you logged in across restarts
+   - `CLIENT_ORIGIN` = your Vercel URL (fill after step 3; can start blank and add later)
+4. Deploy → copy the service URL, e.g. `https://portfolio-cms.onrender.com`.
 
-1. Vercel → **Add New → Project** → import this repo. Framework: **Vite**
-   (build `npm run build`, output `dist` — already set in `vercel.json`).
-2. Project → Settings → **Environment Variables**:
-   - `VITE_API_BASE` = your Render backend URL (from step 1.4)
+## 3. Frontend → Vercel
+
+1. Vercel → your project → **Settings → Environment Variables**:
+   - `VITE_API_BASE` = your Render URL (from 2.4)
    - `VITE_ADMIN_ROUTE` = `/admin-portal` (or a secret of your choosing)
-3. Deploy. Every future `git push` auto-redeploys.
+2. **Redeploy** (Deployments → ⋯ → Redeploy) so the env vars take effect.
+3. Copy your Vercel URL and put it in Render's `CLIENT_ORIGIN` (step 2.3) → Render redeploys.
 
-## 3. First run
+## 4. First run
 
 - Visit `https://your-portfolio.vercel.app/admin-portal` → set your admin password.
 - Edit any section → **Publish** → the public site updates live. No redeploy needed.
+- Uploaded images/videos/PDF resume go to Supabase Storage automatically.
 
 ---
 
-## Local development
-
-```
-npm install
-npm run dev:all      # Express API on :5174 + Vite on :5173 (proxied)
-```
-Leave `VITE_API_BASE` empty locally — the Vite dev proxy handles `/api` + `/uploads`.
-
 ## Notes
-- `server/data/` and `server/uploads/` are gitignored — content and uploads live
-  only on the backend's disk, never in the repo.
-- Back up content anytime from the admin: **Activity → Export** (downloads
-  `content.json`); restore with **Import**.
-- Alternative hosts: Railway (add a volume, set the same env vars) or Fly.io
-  (`fly volumes create`, mount at `/var/data`). The server is host-agnostic.
+- **Cold start**: Render's free service sleeps after ~15 min idle. The first
+  visit after idle wakes it (~30 s); during that window the public site shows
+  seed content, then hydrates to published content once the API responds.
+  Upgrade Render (or keep it warm with a cron ping) to avoid this.
+- **Backups**: admin → **Activity → Export** downloads `content.json`; **Import**
+  restores it.
+- **Local dev**: `npm run dev:all` (Express :5174 + Vite :5173). Leave
+  `VITE_API_BASE` empty; the dev proxy handles `/api` + `/uploads`. Storage is a
+  local JSON file — no Supabase needed.
+- **Other hosts**: any Node host works (Railway, Fly, Koyeb). Set the same env
+  vars; storage is Supabase so no volume is required.

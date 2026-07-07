@@ -4,10 +4,11 @@ import { fileURLToPath } from "url";
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import authRouter from "./auth.js";
+import authRouter, { initAuth } from "./auth.js";
 import contentRouter from "./routes/content.js";
 import mediaRouter, { UPLOADS_DIR } from "./routes/media.js";
 import miscRouter from "./routes/misc.js";
+import { init as initStore, STORAGE_MODE } from "./store.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -77,6 +78,17 @@ app.use((err, req, res, next) => {
   res.status(status).json({ error: err.message || "Server error" });
 });
 
-app.listen(PORT, () => {
-  console.log(`CMS server listening on http://localhost:${PORT}`);
-});
+// Hydrate the store (and ensure an auth secret) before accepting traffic.
+initStore()
+  .then(() => initAuth())
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(
+        `CMS server listening on http://localhost:${PORT} (storage: ${STORAGE_MODE})`
+      );
+    });
+  })
+  .catch((err) => {
+    console.error("Failed to initialize store:", err.message);
+    process.exit(1);
+  });
