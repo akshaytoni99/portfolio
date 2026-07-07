@@ -23,7 +23,10 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // 'motion' is used via JSX member expressions (motion.div); without
+      // eslint-plugin-react's jsx-uses-vars this config cannot see that and
+      // falsely reports it unused — removing the import breaks runtime.
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]|^motion$' }],
     },
   },
   {

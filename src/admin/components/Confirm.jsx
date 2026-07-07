@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 const ConfirmContext = createContext(() => Promise.resolve(false));
 
