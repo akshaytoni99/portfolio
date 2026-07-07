@@ -34,7 +34,12 @@ export default function RichText({ value, onChange, placeholder }) {
   }, [value]);
 
   const emit = () => {
-    if (areaRef.current) onChange(areaRef.current.innerHTML);
+    const el = areaRef.current;
+    if (!el) return;
+    // Browsers leave <br>/<div><br></div> behind after select-all + delete;
+    // treat text-empty content as truly empty so the placeholder returns and
+    // no blank line gets published.
+    onChange(el.textContent.trim() ? el.innerHTML : "");
   };
 
   const exec = (command, arg) => {
@@ -45,7 +50,10 @@ export default function RichText({ value, onChange, placeholder }) {
 
   const addLink = () => {
     const url = window.prompt("Link URL:");
-    if (url) exec("createLink", url);
+    if (!url) return;
+    // "example.com" would resolve as a relative link and 404; give it a scheme.
+    const normalized = /^([a-z]+:|#|\/)/i.test(url.trim()) ? url.trim() : `https://${url.trim()}`;
+    exec("createLink", normalized);
   };
 
   const clearFormatting = () => {

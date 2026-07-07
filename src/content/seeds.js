@@ -356,7 +356,7 @@ export const seeds = {
   seo: {
     title: "Akshay Kumar | Generative AI Engineer",
     description: "",
-    keywords: "",
+    keywords: [],
     ogImage: "",
     favicon: "/favicon.svg",
   },

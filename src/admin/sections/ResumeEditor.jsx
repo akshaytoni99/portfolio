@@ -76,7 +76,13 @@ export default function ResumeEditor({ draft, onChange }) {
             {uploading ? "Uploading…" : "Upload new PDF"}
           </button>
           {data.url ? (
-            <a className="adm-btn" href={mediaSrc(data.url)} download={data.filename || undefined}>
+            <a
+              className="adm-btn"
+              href={mediaSrc(data.url)}
+              download={data.filename || undefined}
+              target="_blank"
+              rel="noopener"
+            >
               Download
             </a>
           ) : null}

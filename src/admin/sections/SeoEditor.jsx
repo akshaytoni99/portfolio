@@ -28,8 +28,9 @@ function TagList({ tags, onChange, placeholder }) {
   const [text, setText] = useState("");
   const add = () => {
     const t = text.trim();
+    if (!t) return;
     setText("");
-    if (!t || tags.includes(t)) return;
+    if (tags.includes(t)) return;
     onChange([...tags, t]);
   };
   return (
@@ -58,6 +59,7 @@ function TagList({ tags, onChange, placeholder }) {
         value={text}
         placeholder={placeholder || "Add + Enter"}
         onChange={(e) => setText(e.target.value)}
+        onBlur={add}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             e.preventDefault();
@@ -114,7 +116,18 @@ export default function SeoEditor({ draft, onChange }) {
         />
       </Field>
       <Field label="Keywords">
-        <TagList tags={data.keywords} onChange={(kw) => setField("keywords", kw)} placeholder="e.g. portfolio" />
+        <TagList
+          tags={
+            Array.isArray(data.keywords)
+              ? data.keywords
+              : String(data.keywords || "")
+                  .split(",")
+                  .map((s) => s.trim())
+                  .filter(Boolean)
+          }
+          onChange={(kw) => setField("keywords", kw)}
+          placeholder="e.g. portfolio"
+        />
       </Field>
       <MediaPicker
         label="OG image (social share preview)"

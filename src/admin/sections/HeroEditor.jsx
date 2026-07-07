@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import MediaPicker from "../components/MediaPicker";
-import RichText from "../components/RichText";
 import { useConfirm } from "../components/Confirm";
 
 const emptyDraft = () => ({
@@ -28,8 +27,9 @@ function TagList({ tags, onChange, placeholder }) {
   const [text, setText] = useState("");
   const add = () => {
     const t = text.trim();
+    if (!t) return;
     setText("");
-    if (!t || tags.includes(t)) return;
+    if (tags.includes(t)) return;
     onChange([...tags, t]);
   };
   return (
@@ -58,6 +58,7 @@ function TagList({ tags, onChange, placeholder }) {
         value={text}
         placeholder={placeholder || "Add + Enter"}
         onChange={(e) => setText(e.target.value)}
+        onBlur={add}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             e.preventDefault();
@@ -117,10 +118,14 @@ export default function HeroEditor({ draft, onChange }) {
         <TagList tags={data.roles} onChange={(roles) => setField("roles", roles)} placeholder="e.g. AI Engineer" />
       </Field>
       <Field label="Description">
-        <RichText
+        {/* Plain textarea: the public Hero renders this as a text node, so
+            rich-text HTML would show as literal tags to visitors. */}
+        <textarea
+          className="adm-input adm-textarea"
+          style={{ width: "100%", minHeight: 90, resize: "vertical" }}
           value={data.description}
-          onChange={(html) => setField("description", html)}
           placeholder="Short intro paragraph…"
+          onChange={(e) => setField("description", e.target.value)}
         />
       </Field>
       <MediaPicker

@@ -132,9 +132,10 @@ export default function AboutEditor({ draft, onChange }) {
               className="adm-input"
               type="number"
               style={{ width: 90 }}
-              value={st.value}
+              value={st.value ?? ""}
               placeholder="Value"
-              onChange={(e) => updateItem("stats", i, { value: Number(e.target.value) })}
+              onChange={(e) => updateItem("stats", i, { value: e.target.value })}
+              onBlur={(e) => updateItem("stats", i, { value: Number(e.target.value) || 0 })}
             />
             <input
               className="adm-input"

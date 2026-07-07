@@ -109,6 +109,12 @@ export default function MediaPicker({ value, onChange, accept = "any", label }) 
   const handleUpload = async (files) => {
     const file = files && files[0];
     if (!file) return;
+    // Drag-and-drop bypasses the <input accept> dialog filter — enforce here
+    // so e.g. a PDF can't be dropped into an image-only picker.
+    if (!matchesAccept({ name: file.name, type: file.type }, accept)) {
+      toast(`Only ${accept} files are allowed here`, "error");
+      return;
+    }
     setUploading(true);
     try {
       const data = await uploadFile(file);

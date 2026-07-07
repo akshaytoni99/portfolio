@@ -250,6 +250,24 @@ function ActivityPanel({ onImported }) {
     }
   };
 
+  // A bare <a href="/api/admin/export"> would resolve against the frontend
+  // origin (not VITE_API_BASE) and carry no cross-site auth cookie — broken in
+  // the split-host deploy. Fetch through the API wrapper and download a blob.
+  const handleExport = async () => {
+    try {
+      const res = await api.request("/api/admin/export");
+      const payload = res instanceof Response ? await res.blob() : new Blob([JSON.stringify(res, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(payload);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "content.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      if (err.status !== 401) toast(err.message, "error");
+    }
+  };
+
   return (
     <div className="adm-panel">
       <div className="adm-section-head">
@@ -258,9 +276,9 @@ function ActivityPanel({ onImported }) {
           <span className="adm-section-meta">Recent admin actions, most recent first.</span>
         </div>
         <div className="adm-section-actions">
-          <a className="adm-btn adm-btn-outline" href="/api/admin/export" download="content.json">
+          <button type="button" className="adm-btn adm-btn-outline" onClick={handleExport}>
             Export
-          </a>
+          </button>
           <button type="button" className="adm-btn adm-btn-outline" onClick={() => fileRef.current?.click()}>
             Import
           </button>
@@ -389,6 +407,7 @@ function Dashboard({ onLogout }) {
   const [navOpen, setNavOpen] = useState(false);
   const timersRef = useRef({});
   const draftsRef = useRef({});
+  const savingRef = useRef({}); // in-flight PUT promise per section
 
   const loadContent = useCallback(async () => {
     try {
@@ -403,21 +422,22 @@ function Dashboard({ onLogout }) {
     loadContent();
   }, [loadContent]);
 
-  useEffect(() => {
-    const timers = timersRef.current;
-    return () => Object.values(timers).forEach(clearTimeout);
-  }, []);
-
   const saveDraft = useCallback(
     async (key, draft) => {
       setSaveState((s) => ({ ...s, [key]: "saving" }));
-      try {
-        await api.put(`/api/admin/content/${key}`, draft);
-        setSaveState((s) => ({ ...s, [key]: "saved" }));
-      } catch (err) {
-        setSaveState((s) => ({ ...s, [key]: "error" }));
-        if (err.status !== 401) toast(`Autosave failed: ${err.message}`, "error");
-      }
+      const p = (async () => {
+        try {
+          await api.put(`/api/admin/content/${key}`, draft);
+          setSaveState((s) => ({ ...s, [key]: "saved" }));
+        } catch (err) {
+          setSaveState((s) => ({ ...s, [key]: "error" }));
+          if (err.status !== 401) toast(`Autosave failed: ${err.message}`, "error");
+        } finally {
+          if (savingRef.current[key] === p) delete savingRef.current[key];
+        }
+      })();
+      savingRef.current[key] = p;
+      return p;
     },
     [toast]
   );
@@ -437,28 +457,47 @@ function Dashboard({ onLogout }) {
     [saveDraft]
   );
 
-  // Flush a pending debounced save immediately (before publish)
+  // Flush a pending debounced save AND any in-flight PUT (publish must never
+  // race an autosave and promote a stale draft).
   const flushSave = useCallback(
     async (key) => {
       if (timersRef.current[key]) {
         clearTimeout(timersRef.current[key]);
         delete timersRef.current[key];
         await saveDraft(key, draftsRef.current[key]);
+      } else if (savingRef.current[key]) {
+        await savingRef.current[key];
       }
     },
     [saveDraft]
   );
 
+  // On unmount (logout, auth-drop) fire any pending debounced saves so the
+  // last edit is not silently lost with the cancelled timer.
+  useEffect(() => {
+    return () => {
+      for (const key of Object.keys(timersRef.current)) {
+        clearTimeout(timersRef.current[key]);
+        delete timersRef.current[key];
+        const draft = draftsRef.current[key];
+        if (draft !== undefined) saveDraft(key, draft);
+      }
+    };
+  }, [saveDraft]);
+
   const publishSection = async (key) => {
     try {
       await flushSave(key);
-      await api.post(`/api/admin/content/${key}/publish`);
-      const now = new Date().toISOString();
-      setContent((c) => ({
-        ...c,
-        [key]: { ...(c?.[key] || {}), published: c?.[key]?.draft ?? null, updatedAt: now },
-      }));
-      setPublishedAt((p) => ({ ...p, [key]: now }));
+      // Use the server's post-publish entry as truth instead of guessing.
+      const entry = await api.post(`/api/admin/content/${key}/publish`);
+      if (entry && typeof entry === "object" && "published" in entry) {
+        setContent((c) => ({ ...c, [key]: entry }));
+        if (entry.published == null) {
+          toast(`${labelOf(key)} has no draft yet — edit it first, then publish`, "error");
+          return;
+        }
+      }
+      setPublishedAt((p) => ({ ...p, [key]: new Date().toISOString() }));
       toast(`${labelOf(key)} published`);
     } catch (err) {
       if (err.status !== 401) toast(err.message, "error");
@@ -491,23 +530,20 @@ function Dashboard({ onLogout }) {
   const publishAll = async () => {
     try {
       await Promise.all(CONTENT_SECTIONS.map((s) => flushSave(s.key)));
-      await api.post("/api/admin/publish-all");
+      const res = await api.post("/api/admin/publish-all");
+      const publishedKeys = Array.isArray(res?.published) ? res.published : [];
       const now = new Date().toISOString();
-      setContent((c) => {
-        const nextC = { ...c };
-        for (const s of CONTENT_SECTIONS) {
-          if (nextC[s.key]) {
-            nextC[s.key] = { ...nextC[s.key], published: nextC[s.key].draft ?? null, updatedAt: now };
-          }
-        }
-        return nextC;
-      });
       setPublishedAt((p) => {
         const nextP = { ...p };
-        for (const s of CONTENT_SECTIONS) nextP[s.key] = now;
+        for (const key of publishedKeys) nextP[key] = now;
         return nextP;
       });
-      toast("All sections published");
+      await loadContent(); // resync local state with the server's truth
+      toast(
+        publishedKeys.length
+          ? `Published: ${publishedKeys.join(", ")}`
+          : "Nothing to publish — no edited sections"
+      );
     } catch (err) {
       if (err.status !== 401) toast(err.message, "error");
     }
@@ -524,6 +560,13 @@ function Dashboard({ onLogout }) {
   };
 
   const logout = async () => {
+    // Flush pending edits first — logout unmounts the dashboard and would
+    // otherwise cancel the debounced autosave, silently losing the last edit.
+    try {
+      await Promise.all(CONTENT_SECTIONS.map((s) => flushSave(s.key)));
+    } catch {
+      /* best effort */
+    }
     try {
       await api.post("/api/auth/logout");
     } catch {
@@ -584,7 +627,9 @@ function Dashboard({ onLogout }) {
             <h2 className="adm-section-title">{section.label}</h2>
             <span className="adm-section-meta">
               {meta?.published
-                ? `Last published ${formatTime(publishedAt[section.key] || meta.updatedAt)}`
+                ? publishedAt[section.key]
+                  ? `Last published ${formatTime(publishedAt[section.key])}`
+                  : "Published"
                 : "Never published"}
             </span>
           </div>

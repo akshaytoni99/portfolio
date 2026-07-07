@@ -115,7 +115,9 @@ export default function MediaManager() {
 
   const copyUrl = async (url) => {
     try {
-      const absolute = new URL(url, window.location.origin).href;
+      // mediaSrc prefixes /uploads/ paths with the API origin so the copied
+      // link works when the frontend and backend are on different hosts.
+      const absolute = new URL(mediaSrc(url), window.location.origin).href;
       await navigator.clipboard.writeText(absolute);
       toast("URL copied to clipboard");
     } catch {
