@@ -1,0 +1,139 @@
+.feature-section {
+  padding: 6rem 2rem 7rem;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.feature-head {
+  width: 100%;
+  max-width: 936px;
+  margin: 0 auto 3rem;
+  opacity: 0;
+  transform: translateY(40px);
+  filter: blur(8px);
+  transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.feature-head.revealed {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* ── grid (matches spec: 1 col → 3 col, gap-10 → md:gap-3) ── */
+.fcard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  width: 100%;
+  max-width: 936px;
+}
+
+@media (min-width: 768px) {
+  .fcard-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+/* ── size-restriction wrapper ── */
+.fcard-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 260px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .fcard-wrap {
+    max-width: 300px;
+  }
+}
+
+/* ── glow behind the card ── */
+.fcard-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 260px;
+  opacity: 0.6;
+  border-radius: 40px;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 768px) {
+  .fcard-glow {
+    height: 300px;
+  }
+}
+
+/* brighten the glow on hover */
+.fcard-wrap:hover .fcard-glow {
+  opacity: 0.85;
+}
+
+/* ── foreground card with gradient border (background-clip) ── */
+.fcard-fg {
+  position: relative;
+  align-self: stretch;
+  height: 260px;
+  border-radius: 40px;
+  z-index: 10;
+  overflow: hidden;
+  border: 8px solid transparent;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 768px) {
+  .fcard-fg {
+    height: 300px;
+  }
+}
+
+.fcard-wrap:hover .fcard-fg {
+  transform: translateY(-6px);
+}
+
+/* ── inner content ── */
+.fcard-inner {
+  width: 100%;
+  height: 100%;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.fcard-icon {
+  color: rgba(255, 255, 255, 0.9);
+  display: inline-flex;
+}
+
+.fcard-title {
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 1.25rem;
+  margin: 0 0 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.fcard-desc {
+  color: #9ca3af;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 400;
+  margin: 0;
+}
+
+.fcard-desc::selection {
+  background: rgba(255, 255, 255, 0.2);
+}

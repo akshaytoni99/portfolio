@@ -10,6 +10,7 @@ import About from "./components/About";
 import SectionDivider from "./components/SectionDivider";
 import Experience from "./components/Experience";
 import TechStack from "./components/TechStack";
+import FeatureCards from "./components/FeatureCards";
 import Projects from "./components/Projects";
 import Certifications from "./components/Certifications";
 import Contact from "./components/Contact";
@@ -41,6 +42,8 @@ function App() {
         <Experience />
         <SectionDivider />
         <TechStack />
+        <SectionDivider />
+        <FeatureCards />
         <SectionDivider />
         <Projects />
         <SectionDivider />
