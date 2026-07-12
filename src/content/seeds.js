@@ -413,9 +413,10 @@ export const seeds = {
         id: "cert-genai-rag-udemy",
         title: "Generative AI, LLMs & RAG using LangChain and Hugging Face",
         issuer: "Udemy",
-        date: "",
+        date: "Mar 2026",
         image: "",
-        credentialUrl: "",
+        credentialUrl:
+          "https://udemy-certificate.s3.amazonaws.com/pdf/UC-86a6f551-c703-4131-bba2-6053093629f8.pdf",
         color: "#6366f1",
       },
       {
