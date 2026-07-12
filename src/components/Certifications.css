@@ -193,3 +193,29 @@
 :root[data-theme="light"] .cert-issuer {
   color: color-mix(in srgb, var(--accent) 70%, #0f172a);
 }
+
+/* ── Clickable credential cards ── */
+.cert-card-link {
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+  color: inherit;
+}
+
+.cert-view {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 0.9rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--accent, #6366f1);
+  opacity: 0.85;
+}
+
+.cert-card-link:hover .cert-view {
+  opacity: 1;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}

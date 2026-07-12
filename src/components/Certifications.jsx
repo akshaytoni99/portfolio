@@ -105,29 +105,51 @@ export default function Certifications() {
           whileInView="show"
           viewport={{ once: true, margin: "-80px" }}
         >
-          {certifications.map((cert) => (
-            <motion.div
-              key={cert.id ?? cert.title}
-              className="cert-card"
-              style={{ "--accent": cert.color ?? "#6366f1" }}
-              variants={cardVariants}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-            >
-              <div className="cert-card-glow" />
-              <div className="cert-badge">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={cert.color ?? "#6366f1"} strokeWidth="1.5">
-                  <circle cx="12" cy="8" r="6" />
-                  <path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12" />
-                </svg>
-              </div>
-              <div className="cert-icon" style={{ color: cert.color ?? "#6366f1" }}>
-                {certIcons[cert.id] ?? defaultCertIcon}
-              </div>
-              <h3 className="cert-title">{cert.title}</h3>
-              <span className="cert-issuer">{cert.issuer}</span>
-            </motion.div>
-          ))}
+          {certifications.map((cert) => {
+            const href = cert.credentialUrl || "";
+            const Card = href ? motion.a : motion.div;
+            return (
+              <Card
+                key={cert.id ?? cert.title}
+                className={`cert-card ${href ? "cert-card-link" : ""}`}
+                style={{ "--accent": cert.color ?? "#6366f1" }}
+                variants={cardVariants}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                {...(href
+                  ? {
+                      href,
+                      target: "_blank",
+                      rel: "noreferrer",
+                      "aria-label": `${cert.title} — view credential`,
+                    }
+                  : {})}
+              >
+                <div className="cert-card-glow" />
+                <div className="cert-badge">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={cert.color ?? "#6366f1"} strokeWidth="1.5">
+                    <circle cx="12" cy="8" r="6" />
+                    <path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12" />
+                  </svg>
+                </div>
+                <div className="cert-icon" style={{ color: cert.color ?? "#6366f1" }}>
+                  {certIcons[cert.id] ?? defaultCertIcon}
+                </div>
+                <h3 className="cert-title">{cert.title}</h3>
+                <span className="cert-issuer">{cert.issuer}</span>
+                {href ? (
+                  <span className="cert-view">
+                    View credential
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                  </span>
+                ) : null}
+              </Card>
+            );
+          })}
         </motion.div>
       </div>
     </section>
