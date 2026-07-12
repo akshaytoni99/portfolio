@@ -283,7 +283,7 @@ export const seeds = {
         image: "",
         video: "",
         github: "https://github.com/akshaytoni99/ANN-Customer-Churn-Prediction",
-        demo: "https://ann-customer-churn-prediction-avtvfnwxkupxtjv3biyd7f.streamlit.app",
+        demo: "https://akshay-ann-churn.streamlit.app",
         featured: false,
         category: "Deep Learning",
         order: 11,
