@@ -219,7 +219,7 @@ export const seeds = {
         image: "",
         video: "",
         github: "https://github.com/akshaytoni99/LangChain-Search-Engine-Agent",
-        demo: "https://akshay-search-engine-agent.streamlit.app",
+        demo: "https://akshay-langchain-search.streamlit.app",
         featured: false,
         category: "LangChain",
         order: 7,
