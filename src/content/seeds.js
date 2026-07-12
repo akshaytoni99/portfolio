@@ -104,7 +104,7 @@ export const seeds = {
         description:
           "Built stateful multi-agent AI systems using LangGraph to enable collaborative AI workflows and intelligent automation.",
         tech: ["LangGraph", "LLM", "Multi-Agent Systems", "Python"],
-        image: "https://opengraph.githubassets.com/1/akshaytoni99/Multi-Agent-AI-Applications-with-LangGraph",
+        image: "/projects/proj-langgraph-agents.png",
         video: "",
         github: "https://github.com/akshaytoni99/Multi-Agent-AI-Applications-with-LangGraph",
         demo: "",
@@ -120,7 +120,7 @@ export const seeds = {
         description:
           "Developed a Retrieval-Augmented Generation (RAG) system that enables querying PDF documents using LLMs, embeddings, and AstraDB vector database.",
         tech: ["RAG", "LangChain", "AstraDB", "LLM"],
-        image: "https://opengraph.githubassets.com/1/akshaytoni99/PDF-Query-RAG-System-with-LangChain-AstraDB",
+        image: "/projects/proj-pdf-rag.png",
         video: "",
         github: "https://github.com/akshaytoni99/PDF-Query-RAG-System-with-LangChain-AstraDB",
         demo: "",
@@ -136,7 +136,7 @@ export const seeds = {
         description:
           "AI-powered system that extracts and summarizes web articles and YouTube videos using LLMs to help users quickly understand long-form content.",
         tech: ["LLM", "NLP", "Content Summarization"],
-        image: "/projects/insightstream.png",
+        image: "/projects/proj-insightstream.png",
         video: "",
         github: "https://github.com/akshaytoni99/InsightStream-AI-LLM-Powered-Web-YouTube-Summarization-System",
         demo: "https://insightstream-summarizer.streamlit.app",
@@ -152,7 +152,7 @@ export const seeds = {
         description:
           "Developed an intelligent web data mining tool that scrapes online content and processes it using LLMs to extract structured insights.",
         tech: ["Web Scraping", "LLM", "NLP"],
-        image: "https://opengraph.githubassets.com/1/akshaytoni99/Smart-Web-Data-Miner-with-LLM-Based-Content-Processing",
+        image: "/projects/proj-web-miner.png",
         video: "",
         github: "https://github.com/akshaytoni99/Smart-Web-Data-Miner-with-LLM-Based-Content-Processing",
         demo: "",
@@ -168,7 +168,7 @@ export const seeds = {
         description:
           "Built a conversational AI chatbot that allows users to interact with SQL databases using natural language queries.",
         tech: ["LangChain", "SQL", "Streamlit", "LLM"],
-        image: "/projects/llm-sql-chatbot.png",
+        image: "/projects/proj-sql-chatbot.png",
         video: "",
         github: "https://github.com/akshaytoni99/LLM-Powered-SQL-Database-Chatbot-using-LangChain-and-Streamlit",
         demo: "https://llm-sql-chatbot.streamlit.app",
@@ -184,7 +184,7 @@ export const seeds = {
         description:
           "Machine learning model that detects and classifies hate speech in text using NLP techniques and supervised learning algorithms.",
         tech: ["Machine Learning", "NLP", "Text Classification"],
-        image: "https://opengraph.githubassets.com/1/akshaytoni99/hate-speech-detection-using-machine-learning",
+        image: "/projects/proj-hate-speech.png",
         video: "",
         github: "https://github.com/akshaytoni99/hate-speech-detection-using-machine-learning",
         demo: "",
@@ -200,7 +200,7 @@ export const seeds = {
         description:
           "Interactive Streamlit Q&A chatbot with dual LLM backends — OpenAI GPT models and local open-source models via Ollama — built on LangChain with configurable model, temperature, and token settings.",
         tech: ["LangChain", "OpenAI", "Ollama", "Streamlit"],
-        image: "/projects/openai-chatbot.png",
+        image: "/projects/proj-openai-ollama-chatbot.png",
         video: "",
         github: "https://github.com/akshaytoni99/OpenAI-Ollama-Chatbot",
         demo: "https://akshay-openai-chatbot.streamlit.app",
@@ -216,7 +216,7 @@ export const seeds = {
         description:
           "Conversational search agent that combines DuckDuckGo, Wikipedia, and Arxiv tools with a Groq-hosted Llama 3 model, streaming its reasoning steps live in a Streamlit chat interface.",
         tech: ["LangChain", "Groq", "AI Agents", "Streamlit"],
-        image: "/projects/search-agent.png",
+        image: "/projects/proj-search-engine-agent.png",
         video: "",
         github: "https://github.com/akshaytoni99/LangChain-Search-Engine-Agent",
         demo: "https://akshay-langchain-search.streamlit.app",
@@ -232,7 +232,7 @@ export const seeds = {
         description:
           "Multi-agent CrewAI system where researcher and writer agents collaborate through a YouTube channel search tool to turn video content into polished blog posts, orchestrated with GPT-4.",
         tech: ["CrewAI", "Multi-Agent Systems", "OpenAI", "Python"],
-        image: "https://opengraph.githubassets.com/1/akshaytoni99/Crew-AI-Crash-Course",
+        image: "/projects/proj-crewai-content-pipeline.png",
         video: "",
         github: "https://github.com/akshaytoni99/Crew-AI-Crash-Course",
         demo: "",
@@ -248,7 +248,7 @@ export const seeds = {
         description:
           "Convolutional neural network built with TensorFlow/Keras that classifies waste images as recyclable or organic, using OpenCV preprocessing, early stopping, and confusion-matrix evaluation.",
         tech: ["TensorFlow", "Keras", "CNN", "OpenCV"],
-        image: "https://opengraph.githubassets.com/1/akshaytoni99/-CNN-Approach-to-Classify-Recyclable-and-Organic-Materials",
+        image: "/projects/proj-cnn-waste-classification.png",
         video: "",
         github: "https://github.com/akshaytoni99/-CNN-Approach-to-Classify-Recyclable-and-Organic-Materials",
         demo: "",
@@ -264,7 +264,7 @@ export const seeds = {
         description:
           "Regression analysis of WHO life expectancy data comparing Linear, Ridge, Decision Tree, and Random Forest models, with iterative imputation, statistical testing, and hyperparameter tuning.",
         tech: ["Scikit-learn", "Pandas", "Regression", "Python"],
-        image: "https://opengraph.githubassets.com/1/akshaytoni99/A-Regression-Approach-to-Life-Expectancy-Prediction",
+        image: "/projects/proj-life-expectancy-regression.png",
         video: "",
         github: "https://github.com/akshaytoni99/A-Regression-Approach-to-Life-Expectancy-Prediction",
         demo: "",
@@ -280,7 +280,7 @@ export const seeds = {
         description:
           "Streamlit web app that predicts customer churn probability with an artificial neural network trained on demographic and financial data, enabling proactive retention decisions.",
         tech: ["TensorFlow", "ANN", "Streamlit", "Python"],
-        image: "/projects/ann-churn.png",
+        image: "/projects/proj-ann-customer-churn.png",
         video: "",
         github: "https://github.com/akshaytoni99/ANN-Customer-Churn-Prediction",
         demo: "https://akshay-ann-churn.streamlit.app",
@@ -296,7 +296,7 @@ export const seeds = {
         description:
           "Machine learning model that grades apple quality from features like sweetness, crunchiness, and acidity, using a Random Forest classifier after preprocessing and feature encoding.",
         tech: ["Scikit-learn", "Random Forest", "Pandas", "Python"],
-        image: "https://opengraph.githubassets.com/1/akshaytoni99/Apple-Quality-Classification-using-ML",
+        image: "/projects/proj-apple-quality.png",
         video: "",
         github: "https://github.com/akshaytoni99/Apple-Quality-Classification-using-ML",
         demo: "",
@@ -312,7 +312,7 @@ export const seeds = {
         description:
           "LSTM-based next-word prediction system trained on sequential text with early stopping, deployed as a Streamlit app that tokenizes and pads input to predict the most probable next word.",
         tech: ["LSTM", "TensorFlow", "Streamlit", "NLP"],
-        image: "https://opengraph.githubassets.com/1/akshaytoni99/Next-Word-Prediction-Using-LSTM-Based-Deep-Learning",
+        image: "/projects/proj-lstm-next-word.png",
         video: "",
         github: "https://github.com/akshaytoni99/Next-Word-Prediction-Using-LSTM-Based-Deep-Learning",
         demo: "",
@@ -328,7 +328,7 @@ export const seeds = {
         description:
           "Tweet sentiment classifier combining spaCy NLP preprocessing with a Keras SimpleRNN, benchmarked against Logistic Regression, LinearSVC, and Random Forest baselines.",
         tech: ["RNN", "spaCy", "TensorFlow", "NLP"],
-        image: "https://opengraph.githubassets.com/1/akshaytoni99/Tweet-Sentiment-Analysis-using-RNN-and-spaCy-NLP",
+        image: "/projects/proj-tweet-sentiment-rnn.png",
         video: "",
         github: "https://github.com/akshaytoni99/Tweet-Sentiment-Analysis-using-RNN-and-spaCy-NLP",
         demo: "",

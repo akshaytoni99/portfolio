@@ -189,6 +189,14 @@
    LIGHT THEME OVERRIDES (appended — dark rules above untouched)
    Scoped to :root[data-theme="light"]
    ═══════════════════════════════════════════════════════════ */
+/* Hero stays dark in light mode, so the bar needs its light glass
+   background at all times — not only after scrolling. */
+:root[data-theme="light"] .navbar {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
 :root[data-theme="light"] .navbar.scrolled {
   background: rgba(255, 255, 255, 0.8);
   border-bottom: 1px solid rgba(15, 23, 42, 0.08);
