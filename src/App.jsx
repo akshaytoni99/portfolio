@@ -15,8 +15,14 @@ import Certifications from "./components/Certifications";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
+import ChatWidget from "./components/ChatWidget";
 
 import "./App.css";
+
+// Show the AI chat mascot in local dev, or in production only once the backend
+// URL is configured (VITE_CHATBOT_API) — keeps the live site free of a dead
+// chat button until the RAG backend is deployed.
+const SHOW_CHAT = import.meta.env.DEV || Boolean(import.meta.env.VITE_CHATBOT_API);
 
 function App() {
   return (
@@ -44,6 +50,7 @@ function App() {
       </main>
       <Footer />
       <ScrollToTop />
+      {SHOW_CHAT && <ChatWidget />}
     </>
   );
 }

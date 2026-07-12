@@ -7,16 +7,16 @@ import "./Hero.css";
 const containerVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.15, delayChildren: 0.3 },
+    transition: { staggerChildren: 0.12, delayChildren: 0.2 },
   },
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 28 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
   },
 };
 
@@ -34,56 +34,31 @@ export default function Hero() {
   const [statsRef2, count2] = useCountUp(stats[1]?.value ?? 0);
   const [statsRef3, count3] = useCountUp(stats[2]?.value ?? 0);
   const heroRef = useRef(null);
-  const videoRef = useRef(null);
-  const [muted, setMuted] = useState(true);
   const prefersReducedMotion = useReducedMotion();
 
-  // Scroll-linked parallax: progress 0 = hero top at viewport top, 1 = hero bottom at viewport top.
+  // Scroll-linked parallax on the hero content.
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
-  const videoScale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
-  const innerY = useTransform(scrollYProgress, [0, 0.6], [0, 110]);
-  const innerOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-  const statsY = useTransform(scrollYProgress, [0, 0.7], [0, 60]);
+  const innerY = useTransform(scrollYProgress, [0, 0.6], [0, 90]);
+  const innerOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
+  const statsY = useTransform(scrollYProgress, [0, 0.7], [0, 55]);
+  const auroraY = useTransform(scrollYProgress, [0, 1], [0, 140]);
 
-  const toggleMute = useCallback(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.muted = !video.muted;
-    setMuted(video.muted);
-  }, []);
-
-  // React does not reliably render the muted attribute (facebook/react#10389);
-  // browsers block unmuted autoplay, so force muted before playing.
+  // Cursor parallax for the aurora blobs.
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.defaultMuted = true;
-    video.muted = true;
-    video.play().catch(() => {});
-  }, []);
-
-  // Freeze on a closed-mouth smiling frame instead of the mid-speech last frame.
-  const handleVideoEnd = useCallback(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.currentTime = 19.59;
-  }, []);
-
-  useEffect(() => {
-    const hero = heroRef.current;
-    if (!hero) return;
-    const handleParallax = (e) => {
-      const rect = hero.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
+    const el = heroRef.current;
+    if (!el) return;
+    const onMove = (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
-      hero.style.setProperty("--parallax-x", x.toFixed(3));
-      hero.style.setProperty("--parallax-y", y.toFixed(3));
+      el.style.setProperty("--px", x.toFixed(3));
+      el.style.setProperty("--py", y.toFixed(3));
     };
-    hero.addEventListener("mousemove", handleParallax);
-    return () => hero.removeEventListener("mousemove", handleParallax);
+    el.addEventListener("mousemove", onMove);
+    return () => el.removeEventListener("mousemove", onMove);
   }, []);
 
   const handleMagnet = useCallback((e) => {
@@ -108,13 +83,13 @@ export default function Hero() {
     let timeout;
     if (!deleting) {
       if (text.length < role.length) {
-        timeout = setTimeout(() => setText(role.slice(0, text.length + 1)), 80);
+        timeout = setTimeout(() => setText(role.slice(0, text.length + 1)), 75);
       } else {
         timeout = setTimeout(() => setDeleting(true), 2000);
       }
     } else {
       if (text.length > 0) {
-        timeout = setTimeout(() => setText(text.slice(0, -1)), 40);
+        timeout = setTimeout(() => setText(text.slice(0, -1)), 38);
       } else {
         setDeleting(false);
         setRoleIdx((prev) => (prev + 1) % roles.length);
@@ -125,22 +100,19 @@ export default function Hero() {
 
   return (
     <section id="home" className="hero" ref={heroRef}>
-      <motion.video
-        ref={videoRef}
-        className="hero-video-bg"
-        autoPlay
-        muted
-        playsInline
-        preload="auto"
-        poster="/hero-poster.jpg"
+      {/* ── Premium AI backdrop ── */}
+      <motion.div
+        className="hero-aurora"
         aria-hidden="true"
-        disablePictureInPicture
-        onEnded={handleVideoEnd}
-        style={prefersReducedMotion ? undefined : { scale: videoScale }}
+        style={prefersReducedMotion ? undefined : { y: auroraY }}
       >
-        <source src="/hero-bg.mp4" type="video/mp4" />
-      </motion.video>
-      <div className="hero-video-overlay" aria-hidden="true" />
+        <span className="aurora-blob aurora-1" />
+        <span className="aurora-blob aurora-2" />
+        <span className="aurora-blob aurora-3" />
+      </motion.div>
+      <div className="hero-grid" aria-hidden="true" />
+      <div className="hero-grain" aria-hidden="true" />
+      <div className="hero-vignette" aria-hidden="true" />
 
       <motion.div
         className="hero-inner"
@@ -152,6 +124,11 @@ export default function Hero() {
           initial="hidden"
           animate="visible"
         >
+          <motion.div className="hero-badge" variants={fadeUp}>
+            <span className="hero-badge-dot" />
+            Available for Generative AI / ML roles
+          </motion.div>
+
           <motion.div className="hero-intro" variants={fadeUp}>
             <span className="hero-greeting">{hero.greeting}</span>
           </motion.div>
@@ -162,7 +139,7 @@ export default function Hero() {
                 {word.split("").map((char, ci) => {
                   const globalIdx = words.slice(0, wi).join("").length + ci;
                   return (
-                    <span key={ci} className="letter" style={{ animationDelay: `${0.6 + globalIdx * 0.05}s` }}>
+                    <span key={ci} className="letter" style={{ animationDelay: `${0.5 + globalIdx * 0.045}s` }}>
                       {char}
                     </span>
                   );
@@ -173,6 +150,7 @@ export default function Hero() {
           </motion.h1>
 
           <motion.div className="hero-role" variants={fadeUp}>
+            <span className="role-pre">Building as a</span>{" "}
             <span className="role-text">{text}</span>
             <span className="role-cursor">|</span>
           </motion.div>
@@ -207,7 +185,7 @@ export default function Hero() {
         className="hero-stats"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.7, delay: 1, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.7, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
         style={prefersReducedMotion ? undefined : { y: statsY }}
       >
         <div className="stat" ref={statsRef1}>
@@ -230,34 +208,11 @@ export default function Hero() {
         className="scroll-indicator"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 1.3, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.7, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
       >
         <div className="scroll-line" />
         <span>Scroll</span>
       </motion.div>
-
-      <motion.button
-        className="hero-mute-btn"
-        onClick={toggleMute}
-        aria-label={muted ? "Unmute background video" : "Mute background video"}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 1.3, ease: [0.16, 1, 0.3, 1] }}
-      >
-        {muted ? (
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-            <line x1="23" y1="9" x2="17" y2="15" />
-            <line x1="17" y1="9" x2="23" y2="15" />
-          </svg>
-        ) : (
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
-          </svg>
-        )}
-      </motion.button>
     </section>
   );
 }

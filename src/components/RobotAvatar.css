@@ -1,0 +1,134 @@
+.robot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.robot-svg {
+  overflow: visible;
+  filter: drop-shadow(0 6px 10px rgba(30, 27, 75, 0.28));
+}
+
+/* ── idle: gentle float + soft antenna bob ── */
+.robot--idle .robot-svg,
+.robot--talking .robot-svg {
+  animation: robotFloat 3.4s ease-in-out infinite;
+}
+
+@keyframes robotFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-2.5px) rotate(-1.2deg); }
+}
+
+.robot-antennae {
+  transform-box: fill-box;
+  transform-origin: 60px 40px;
+  animation: robotSway 3.4s ease-in-out infinite;
+}
+
+@keyframes robotSway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(2deg); }
+}
+
+/* ── blinking eyes ── */
+.robot-eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: robotBlink 4.6s ease-in-out infinite;
+}
+
+@keyframes robotBlink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.12); }
+  97% { transform: scaleY(1); }
+}
+
+/* antenna balls always have a faint pulse; brighter when thinking */
+.robot-ball {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: robotPulse 2.6s ease-in-out infinite;
+}
+
+@keyframes robotPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.78; }
+}
+
+/* glow ring hidden unless thinking */
+.robot-glow {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* ── thinking: look up, fast antenna pulse, glow ── */
+.robot--thinking .robot-glow {
+  animation: robotGlow 1.4s ease-in-out infinite;
+}
+
+@keyframes robotGlow {
+  0%, 100% { opacity: 0.25; transform: scale(0.9); }
+  50% { opacity: 0.7; transform: scale(1.08); }
+}
+
+.robot--thinking .robot-ball {
+  animation: robotPulseFast 0.9s ease-in-out infinite;
+}
+
+@keyframes robotPulseFast {
+  0%, 100% { opacity: 1; transform: translateY(0); }
+  50% { opacity: 0.65; transform: translateY(-1.5px); }
+}
+
+.robot--thinking .robot-eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: robotLookUp 1.4s ease-in-out infinite;
+}
+
+@keyframes robotLookUp {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.6px); }
+}
+
+.robot--thinking .robot-eye {
+  animation: none; /* pause blinking while thinking */
+}
+
+/* ── talking: mouth opens/closes ── */
+.robot--talking .robot-mouth {
+  animation: robotTalk 0.42s ease-in-out infinite;
+}
+
+@keyframes robotTalk {
+  0%, 100% { d: path("M52 78 Q60 85 68 78"); }
+  50% { d: path("M52 79 Q60 90 68 79"); }
+}
+
+/* Fallback for engines without CSS `d` animation: nudge the mouth vertically. */
+@supports not (d: path("M0 0")) {
+  .robot--talking .robot-mouth {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: robotTalkFallback 0.42s ease-in-out infinite;
+  }
+  @keyframes robotTalkFallback {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(1.6); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .robot-svg,
+  .robot-antennae,
+  .robot-eye,
+  .robot-ball,
+  .robot-eyes,
+  .robot-glow,
+  .robot-mouth {
+    animation: none !important;
+  }
+}
