@@ -141,3 +141,39 @@
     min-width: unset;
   }
 }
+
+/* ============================================================
+   LIGHT THEME OVERRIDES (appended — do not modify dark rules)
+   Scoped to :root[data-theme="light"]
+   Note: .section-tag / .section-title / .highlight are shared
+   across ALL sections of the site.
+   ============================================================ */
+
+:root[data-theme="light"] .section-tag {
+  color: #4f46e5;
+}
+
+:root[data-theme="light"] .section-title {
+  color: #0f172a;
+}
+
+:root[data-theme="light"] .section-title .highlight {
+  background: linear-gradient(120deg, #4f46e5, #0284c7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+:root[data-theme="light"] .about-text p {
+  color: #1e293b;
+}
+
+:root[data-theme="light"] .highlight-item {
+  border-color: rgba(15, 23, 42, 0.14);
+  background: rgba(255, 255, 255, 0.85);
+  color: #1e293b;
+}
+
+:root[data-theme="light"] .highlight-item:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12), 0 0 25px rgba(99, 102, 241, 0.08);
+}

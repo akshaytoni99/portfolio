@@ -5,6 +5,7 @@ import {
   useMotionValueEvent,
   useReducedMotion,
 } from "framer-motion";
+import ThemeToggle from "./ThemeToggle";
 import "./Navbar.css";
 
 const links = [
@@ -103,6 +104,9 @@ export default function Navbar() {
             <a href="#contact" className="nav-cta" onClick={handleClick}>
               Hire Me
             </a>
+          </li>
+          <li className="nav-theme">
+            <ThemeToggle />
           </li>
         </ul>
       </div>

@@ -27,3 +27,27 @@
   );
   pointer-events: none;
 }
+
+/* ==========================================================================
+   LIGHT THEME OVERRIDES (:root[data-theme="light"]) — appended only,
+   dark-mode rules above are untouched.
+   ========================================================================== */
+
+:root[data-theme="light"] .ai-background {
+  background: var(--color-background, #f6f8fc);
+}
+
+/* Particle canvas is drawn in JS with dark-theme colors; fade it so it
+   reads as subtle texture instead of muddying the light background. */
+:root[data-theme="light"] .ai-background canvas {
+  opacity: 0.25;
+}
+
+/* Vignette: replace the near-black ink with a faint slate edge. */
+:root[data-theme="light"] .ai-background::after {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 50%,
+    rgba(15, 23, 42, 0.08) 100%
+  );
+}

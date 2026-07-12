@@ -20,3 +20,18 @@
     display: none;
   }
 }
+
+/* ==========================================================================
+   LIGHT THEME OVERRIDES (:root[data-theme="light"]) — appended only,
+   dark-mode rules above are untouched.
+   ========================================================================== */
+
+/* Keep the glow subtle on light: light-theme indigo/sky accents at low alpha. */
+:root[data-theme="light"] .cursor-glow {
+  background: radial-gradient(
+    circle,
+    rgba(79, 70, 229, 0.05) 0%,
+    rgba(2, 132, 199, 0.03) 30%,
+    transparent 70%
+  );
+}

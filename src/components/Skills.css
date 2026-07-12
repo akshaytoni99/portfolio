@@ -154,3 +154,46 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ============================================
+   LIGHT THEME OVERRIDES — appended, scoped to
+   :root[data-theme="light"]. Do not edit dark
+   rules above.
+   ============================================ */
+
+:root[data-theme="light"] .skill-card {
+  border-color: rgba(15, 23, 42, 0.14);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+:root[data-theme="light"] .skill-card:hover {
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    0 0 40px color-mix(in srgb, var(--accent) 15%, transparent);
+  background: rgba(15, 23, 42, 0.04);
+  /* skillPulse keyframes hardcode dark shadows; swap to a light variant */
+  animation-name: skillPulseLight;
+}
+
+@keyframes skillPulseLight {
+  0%, 100% {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 0 30px color-mix(in srgb, var(--accent) 15%, transparent);
+  }
+  50% {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 0 50px color-mix(in srgb, var(--accent) 25%, transparent), 0 0 80px color-mix(in srgb, var(--accent) 10%, transparent);
+  }
+}
+
+:root[data-theme="light"] .skill-card-header h3 {
+  color: #0f172a;
+}
+
+:root[data-theme="light"] .skill-tag {
+  background: rgba(15, 23, 42, 0.04);
+  border-color: rgba(15, 23, 42, 0.14);
+  color: #1e293b;
+}
+
+:root[data-theme="light"] .skill-card:hover .skill-tag {
+  color: #0f172a;
+}

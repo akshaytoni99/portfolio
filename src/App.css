@@ -6,3 +6,8 @@ main {
 html {
   scroll-behavior: smooth;
 }
+
+/* ==========================================================================
+   LIGHT THEME (:root[data-theme="light"]) — no overrides needed: this file
+   contains no hardcoded colors, backgrounds, borders, or shadows.
+   ========================================================================== */

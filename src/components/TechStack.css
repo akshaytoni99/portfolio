@@ -247,3 +247,40 @@
     height: 18px;
   }
 }
+
+/* ============================================
+   LIGHT THEME OVERRIDES — appended, scoped to
+   :root[data-theme="light"]. Do not edit dark
+   rules above.
+   ============================================ */
+
+:root[data-theme="light"] .tech-category {
+  border-color: rgba(15, 23, 42, 0.14);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+:root[data-theme="light"] .tech-category:hover {
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    0 0 40px color-mix(in srgb, var(--accent) 15%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  background: rgba(15, 23, 42, 0.04);
+}
+
+:root[data-theme="light"] .tech-category-title {
+  color: #0f172a;
+  border-bottom-color: rgba(15, 23, 42, 0.1);
+}
+
+:root[data-theme="light"] .tech-tool {
+  border-color: rgba(15, 23, 42, 0.14);
+  background: rgba(15, 23, 42, 0.04);
+}
+
+:root[data-theme="light"] .tool-name {
+  color: #1e293b;
+}
+
+:root[data-theme="light"] .tech-tool:hover .tool-name {
+  color: #0f172a;
+}

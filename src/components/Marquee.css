@@ -89,3 +89,30 @@
     padding: 0 1.5rem;
   }
 }
+
+/* ============================================
+   LIGHT THEME OVERRIDES — appended, scoped to
+   :root[data-theme="light"]. Do not edit dark
+   rules above.
+   ============================================ */
+
+:root[data-theme="light"] .marquee-wrapper {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+/* Fade edges must blend into the light page background */
+:root[data-theme="light"] .marquee-wrapper::before {
+  background: linear-gradient(to right, var(--color-background, #f6f8fc), transparent);
+}
+
+:root[data-theme="light"] .marquee-wrapper::after {
+  background: linear-gradient(to left, var(--color-background, #f6f8fc), transparent);
+}
+
+:root[data-theme="light"] .marquee-text {
+  color: #52627a;
+}
+
+:root[data-theme="light"] .marquee-item:hover .marquee-text {
+  color: #4f46e5;
+}

@@ -48,3 +48,25 @@
     transform: scale(1.3);
   }
 }
+
+/* ============================================================
+   LIGHT THEME OVERRIDES (appended — do not edit dark rules above)
+   Glow is animated via keyframes, so a light variant keyframe is
+   needed; alphas reduced ~40% for the light background.
+   ============================================================ */
+
+@keyframes dotPulseLight {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.24);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.36);
+    transform: scale(1.3);
+  }
+}
+
+:root[data-theme="light"] .divider-dot {
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.24);
+  animation-name: dotPulseLight;
+}

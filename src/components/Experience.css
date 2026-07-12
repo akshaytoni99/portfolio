@@ -229,3 +229,47 @@
     border-left: 3px solid var(--accent, #6366f1);
   }
 }
+
+/* ============================================================
+   LIGHT THEME OVERRIDES (appended — do not modify dark rules)
+   Scoped to :root[data-theme="light"]
+   ============================================================ */
+
+:root[data-theme="light"] .exp-dot {
+  border-color: #f6f8fc;
+}
+
+:root[data-theme="light"] .exp-content {
+  border-color: rgba(15, 23, 42, 0.14);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+:root[data-theme="light"] .exp-content:hover {
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    0 0 40px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+:root[data-theme="light"] .exp-role {
+  color: #0f172a;
+}
+
+:root[data-theme="light"] .exp-company {
+  color: #0284c7;
+}
+
+:root[data-theme="light"] .exp-period {
+  color: #1e293b;
+}
+
+:root[data-theme="light"] .exp-location {
+  color: #52627a;
+}
+
+:root[data-theme="light"] .exp-desc {
+  color: #1e293b;
+}
+
+:root[data-theme="light"] .exp-highlights li {
+  color: #52627a;
+}

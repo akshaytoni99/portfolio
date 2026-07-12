@@ -122,3 +122,41 @@
     max-width: 300px;
   }
 }
+
+/* ============================================================
+   LIGHT THEME OVERRIDES — scoped to :root[data-theme="light"]
+   Appended for light-mode support; dark rules above unchanged.
+   ============================================================ */
+
+:root[data-theme="light"] .contact-subtitle {
+  color: #52627a;
+}
+
+:root[data-theme="light"] .contact-card {
+  border-color: rgba(15, 23, 42, 0.14);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+:root[data-theme="light"] .contact-card:hover {
+  background: rgba(15, 23, 42, 0.04);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    0 0 30px color-mix(in srgb, var(--accent) 7%, transparent);
+}
+
+/* Darken per-card accent icon color for contrast on light backgrounds */
+:root[data-theme="light"] .contact-icon {
+  color: color-mix(in srgb, var(--accent) 75%, #0f172a);
+}
+
+:root[data-theme="light"] .contact-card h3 {
+  color: #0f172a;
+}
+
+:root[data-theme="light"] .contact-card span {
+  color: #52627a;
+}
+
+:root[data-theme="light"] .contact-card:hover span {
+  color: #334155;
+}

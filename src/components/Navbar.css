@@ -165,3 +165,81 @@
   transition: background 0.3s ease, box-shadow 0.3s ease,
     padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* ═══════════════════════════════════════════════════════════
+   THEME-TOGGLE NAV ITEM LAYOUT (theme-agnostic, added with
+   light-theme work — aligns ThemeToggle with nav links)
+   ═══════════════════════════════════════════════════════════ */
+.nav-theme {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+}
+
+@media (max-width: 768px) {
+  /* Keep the toggle visible + centered inside the slide-down panel */
+  .nav-theme {
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LIGHT THEME OVERRIDES (appended — dark rules above untouched)
+   Scoped to :root[data-theme="light"]
+   ═══════════════════════════════════════════════════════════ */
+:root[data-theme="light"] .navbar.scrolled {
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+:root[data-theme="light"] .navbar.nav-scrolled {
+  background: rgba(255, 255, 255, 0.82);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.1);
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.2);
+}
+
+:root[data-theme="light"] .nav-logo {
+  color: #0f172a;
+}
+
+:root[data-theme="light"] .logo-bracket {
+  color: #4f46e5;
+}
+
+:root[data-theme="light"] .nav-links a {
+  color: #52627a;
+}
+
+:root[data-theme="light"] .nav-links a:hover {
+  color: #0f172a;
+}
+
+:root[data-theme="light"] .nav-links a.active {
+  color: #4338ca;
+}
+
+/* !important required only because the base .nav-cta rule sets these
+   with !important — a non-important override can never win. */
+:root[data-theme="light"] .nav-cta {
+  color: #4338ca !important;
+  border-color: rgba(79, 70, 229, 0.35) !important;
+}
+
+:root[data-theme="light"] .nav-cta:hover {
+  border-color: rgba(79, 70, 229, 0.55) !important;
+}
+
+:root[data-theme="light"] .nav-toggle span {
+  background: #0f172a;
+}
+
+@media (max-width: 768px) {
+  /* Mobile slide-down/slide-in menu panel on light theme */
+  :root[data-theme="light"] .nav-links {
+    background: rgba(255, 255, 255, 0.96);
+    border-left: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: -12px 0 40px rgba(15, 23, 42, 0.12);
+  }
+}

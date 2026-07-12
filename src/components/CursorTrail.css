@@ -13,3 +13,14 @@
     display: none;
   }
 }
+
+/* ==========================================================================
+   LIGHT THEME OVERRIDES (:root[data-theme="light"]) — appended only,
+   dark-mode rules above are untouched.
+   ========================================================================== */
+
+/* Trail particles are drawn in JS with dark-theme colors; fade the canvas
+   so the trail stays subtle on a light background. */
+:root[data-theme="light"] .cursor-trail {
+  opacity: 0.35;
+}

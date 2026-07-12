@@ -17,3 +17,22 @@
     box-shadow: 0 0 15px rgba(99, 102, 241, 0.7), 0 0 30px rgba(56, 189, 248, 0.5), 0 0 50px rgba(56, 189, 248, 0.2);
   }
 }
+
+/* ============================================================
+   LIGHT THEME OVERRIDES (appended — do not edit dark rules above)
+   Gradient bar stays (background accent, not text); glow is animated
+   via keyframes, so a light variant keyframe with ~40% lower alpha.
+   ============================================================ */
+
+@keyframes progressGlowLight {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.3), 0 0 20px rgba(56, 189, 248, 0.18);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.42), 0 0 30px rgba(56, 189, 248, 0.3), 0 0 50px rgba(56, 189, 248, 0.12);
+  }
+}
+
+:root[data-theme="light"] .scroll-progress-bar {
+  animation-name: progressGlowLight;
+}

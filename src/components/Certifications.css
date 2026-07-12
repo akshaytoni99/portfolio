@@ -156,3 +156,40 @@
     margin: 0 auto;
   }
 }
+
+/* ============================================================
+   LIGHT THEME OVERRIDES — scoped to :root[data-theme="light"]
+   Appended for light-mode support; dark rules above unchanged.
+   ============================================================ */
+
+:root[data-theme="light"] .cert-card {
+  border-color: rgba(15, 23, 42, 0.14);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+:root[data-theme="light"] .cert-card:hover {
+  background: rgba(15, 23, 42, 0.04);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.15),
+    0 0 40px color-mix(in srgb, var(--accent) 9%, transparent);
+  animation: certPulseLight 2s ease-in-out infinite;
+}
+
+/* Light variant of certPulse with reduced shadow alpha */
+@keyframes certPulseLight {
+  0%, 100% {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 0 30px color-mix(in srgb, var(--accent) 9%, transparent);
+  }
+  50% {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 0 50px color-mix(in srgb, var(--accent) 15%, transparent), 0 0 80px color-mix(in srgb, var(--accent) 6%, transparent);
+  }
+}
+
+:root[data-theme="light"] .cert-title {
+  color: #0f172a;
+}
+
+/* Darken per-card accent text for contrast on light backgrounds */
+:root[data-theme="light"] .cert-issuer {
+  color: color-mix(in srgb, var(--accent) 70%, #0f172a);
+}
